@@ -15,7 +15,8 @@ message("proj_src_dir: ${proj_src_dir}")
 
 add_compile_definitions(USE_JSON)
 
-set(COMPONENT_DIRECTORIES ${proj_src_dir} ${CMAKE_SOURCE_DIR}/../components)
+file(GLOB external_test_components ${CMAKE_SOURCE_DIR}/../external/*/components)
+set(COMPONENT_DIRECTORIES ${proj_src_dir} ${CMAKE_SOURCE_DIR}/../components ${external_test_components})
 
 set(comp_compile_feats cxx_std_20)
 set(comp_compile_opts -O0 -ggdb  # -fanalyzer
@@ -31,7 +32,7 @@ if(ASAN)
   add_compile_options(-fsanitize=address -fstack-protector-all)
 endif()
 
-include(${proj_src_dir}/test_host/host_test.cmake)
+include(${CMAKE_SOURCE_DIR}/../external/host-test-idf/components/test_host/host_test.cmake)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/../components/main ${CMAKE_BINARY_DIR}/${BIN_COMP_ROOT}/main)
 
