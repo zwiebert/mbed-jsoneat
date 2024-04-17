@@ -2,5 +2,5 @@
 	path = components/jsmn/jsmn
 	url = https://github.com/zserge/jsmn.git
 [submodule "test/external/host-test-idf"]
-	path = test/external/host-test-idf
+	path = external/host-test-idf
 	url = https://github.com/zwiebert/host-test-idf.git
