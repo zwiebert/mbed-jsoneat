@@ -62,16 +62,16 @@
 
 <details> <summary>This repository </summary>
 
-    * This repository on  [GitHub](https://github.com/zwiebert/jsmnit)
+  * This repository on [GitHub](https://github.com/zwiebert/jsmnit)
 
 </details>
 <details> <summary>Required Submodules</summary>
 
-    * Submodule: [jsmn](https://github.com/zserge/jsmn) - JSON parser/tokenizer
+  * JSON parser/tokenizer: [jsmn](https://github.com/zserge/jsmn)
 
 </details>
 <details> <summary>Optional Submodules</summary>
 
-    * Submodule (for testing only): [host-test-idf](https://github.com/zwiebert/host-test-idf) - esp-idf/unity component tests on host 
+  * esp-idf/unity component to run tests on host: [host-test-idf](https://github.com/zwiebert/host-test-idf)
 
 </details>
