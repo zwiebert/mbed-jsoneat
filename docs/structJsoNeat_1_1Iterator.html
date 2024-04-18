@@ -91,10 +91,16 @@ $(document).ready(function(){initNavTree('structJsoNeat_1_1Iterator.html',''); i
 <div class="title">JsoNeat&lt; input_type &gt;::Iterator Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This has iterator functionality, but also provides lots of token related member functions.  
+ <a href="structJsoNeat_1_1Iterator.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="jsoneat_8hh_source.html">jsoneat.hh</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for JsoNeat&lt; input_type &gt;::Iterator:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="structJsoNeat_1_1Iterator__coll__graph.svg" width="190" height="484"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="structJsoNeat_1_1Iterator__coll__graph.svg" width="190" height="484"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -223,7 +229,17 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (con
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (const <a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a> &amp;a, const <a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a> &amp;b)</td></tr>
 <tr class="separator:ab8d0be5179248add84ae0c9ef40a7f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename input_type = const char*&gt;<br />
+struct JsoNeat&lt; input_type &gt;::Iterator</h3>
+
+<p>This has iterator functionality, but also provides lots of token related member functions. </p>
+<pre class="fragment">   With Jsmn, the token holds indexes of the original JSON buffer.
+   Like a normal iterator, this struct holds a pointer to the token, which is an element of \ref m_tok_arr
+
+   To access the actual JSON data (\ref m_json in class \ref JsoNeat), \ref m_container in this struct holds a
+   references, which then can also be used to call member functions of JsoNeat object.
+</pre> </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9b5ee9664d18c3992f1dc5475ffb36f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9b5ee9664d18c3992f1dc5475ffb36f1">&#9670;&nbsp;</a></span>getValue() <span class="overload">[1/2]</span></h2>
 
@@ -649,6 +665,18 @@ template&lt;typename input_type  = const char*&gt; </div>
 
 <p>skip this key/value pair (in and object) </p>
 <dl class="section return"><dt>Returns</dt><dd>success. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="structJsoNeat_1_1Iterator_a8e51259a9bc9df8d823e0d6d138e6dc5_cgraph.svg" width="348" height="76"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="structJsoNeat_1_1Iterator_a8e51259a9bc9df8d823e0d6d138e6dc5_icgraph.svg" width="348" height="76"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
@@ -679,6 +707,18 @@ template&lt;typename input_type  = const char*&gt; </div>
 
 <p>skip this value (of an array) </p>
 <dl class="section return"><dt>Returns</dt><dd>success. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="structJsoNeat_1_1Iterator_a58375f61678c65c97f2ae6ca3d1226a6_cgraph.svg" width="348" height="76"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="structJsoNeat_1_1Iterator_a58375f61678c65c97f2ae6ca3d1226a6_icgraph.svg" width="348" height="76"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
@@ -918,7 +958,7 @@ template&lt;typename input_type  = const char*&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classJsoNeat.html">JsoNeat</a></li><li class="navelem"><a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a></li>
-    <li class="footer">Generated on Thu Apr 18 2024 16:31:38 for JsoNeat by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu Apr 18 2024 20:32:09 for JsoNeat by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

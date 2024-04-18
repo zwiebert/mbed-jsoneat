@@ -85,7 +85,6 @@ $(document).ready(function(){initNavTree('classJsoNeat.html',''); initResizable(
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classJsoNeat-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -100,12 +99,14 @@ $(document).ready(function(){initNavTree('classJsoNeat.html',''); initResizable(
 <div class="dynheader">
 Collaboration diagram for JsoNeat&lt; input_type &gt;:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classJsoNeat__coll__graph.svg" width="190" height="206"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classJsoNeat__coll__graph.svg" width="182" height="176"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This has iterator functionality, but also provides lots of token related member functions.  <a href="structJsoNeat_1_1Iterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -125,15 +126,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4ddaf5882f454d89c71fbbc7eec13bda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJsoNeat.html#a4ddaf5882f454d89c71fbbc7eec13bda">end</a> ()</td></tr>
 <tr class="memdesc:a4ddaf5882f454d89c71fbbc7eec13bda"><td class="mdescLeft">&#160;</td><td class="mdescRight">get JSON root object end iterator  <a href="classJsoNeat.html#a4ddaf5882f454d89c71fbbc7eec13bda">More...</a><br /></td></tr>
 <tr class="separator:a4ddaf5882f454d89c71fbbc7eec13bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a4121c8b1bc74397ad90fffbc3b457145"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJsoNeat.html#a4121c8b1bc74397ad90fffbc3b457145">skip_value</a> (<a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a> &amp;it)</td></tr>
-<tr class="memdesc:a4121c8b1bc74397ad90fffbc3b457145"><td class="mdescLeft">&#160;</td><td class="mdescRight">skip value (of an array)  <a href="classJsoNeat.html#a4121c8b1bc74397ad90fffbc3b457145">More...</a><br /></td></tr>
-<tr class="separator:a4121c8b1bc74397ad90fffbc3b457145"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8af5808bbb31b2112211c124b16c643"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJsoNeat.html#aa8af5808bbb31b2112211c124b16c643">skip_key_and_value</a> (<a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a> &amp;it)</td></tr>
-<tr class="memdesc:aa8af5808bbb31b2112211c124b16c643"><td class="mdescLeft">&#160;</td><td class="mdescRight">skip a key/value pair (in an object)  <a href="classJsoNeat.html#aa8af5808bbb31b2112211c124b16c643">More...</a><br /></td></tr>
-<tr class="separator:aa8af5808bbb31b2112211c124b16c643"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -243,100 +235,6 @@ template&lt;typename input_type  = const char*&gt; </div>
 
 </div>
 </div>
-<a id="aa8af5808bbb31b2112211c124b16c643"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8af5808bbb31b2112211c124b16c643">&#9670;&nbsp;</a></span>skip_key_and_value()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename input_type  = const char*&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool <a class="el" href="classJsoNeat.html">JsoNeat</a>&lt; input_type &gt;::skip_key_and_value </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a> &amp;&#160;</td>
-          <td class="paramname"><em>it</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>skip a key/value pair (in an object) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">it</td><td>iterator pointing to the key/value pair to skip </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>success </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classJsoNeat_aa8af5808bbb31b2112211c124b16c643_cgraph.svg" width="378" height="70"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classJsoNeat_aa8af5808bbb31b2112211c124b16c643_icgraph.svg" width="378" height="70"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-
-</div>
-</div>
-<a id="a4121c8b1bc74397ad90fffbc3b457145"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4121c8b1bc74397ad90fffbc3b457145">&#9670;&nbsp;</a></span>skip_value()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename input_type  = const char*&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool <a class="el" href="classJsoNeat.html">JsoNeat</a>&lt; input_type &gt;::skip_value </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a> &amp;&#160;</td>
-          <td class="paramname"><em>it</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>skip value (of an array) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">it</td><td>iterator pointing to the value to skip </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>success </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classJsoNeat_a4121c8b1bc74397ad90fffbc3b457145_cgraph.svg" width="378" height="70"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classJsoNeat_a4121c8b1bc74397ad90fffbc3b457145_icgraph.svg" width="378" height="70"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>jsoneat/<a class="el" href="jsoneat_8hh_source.html">jsoneat.hh</a></li>
 </ul>
@@ -346,7 +244,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classJsoNeat.html">JsoNeat</a></li>
-    <li class="footer">Generated on Thu Apr 18 2024 16:31:38 for JsoNeat by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu Apr 18 2024 20:32:09 for JsoNeat by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

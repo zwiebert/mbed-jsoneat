@@ -7,7 +7,5 @@ var classJsoNeat =
     [ "begin", "classJsoNeat.html#aade43698fae0cf9c2785e5fa458aae1c", null ],
     [ "end", "classJsoNeat.html#a4ddaf5882f454d89c71fbbc7eec13bda", null ],
     [ "get_json", "classJsoNeat.html#a1c09fe863d8d3b685f54b043ef80e2bf", null ],
-    [ "operator bool", "classJsoNeat.html#a66c4cb8fd75d88d46fdef3b358fc4da7", null ],
-    [ "skip_key_and_value", "classJsoNeat.html#aa8af5808bbb31b2112211c124b16c643", null ],
-    [ "skip_value", "classJsoNeat.html#a4121c8b1bc74397ad90fffbc3b457145", null ]
+    [ "operator bool", "classJsoNeat.html#a66c4cb8fd75d88d46fdef3b358fc4da7", null ]
 ];
