@@ -1,5 +1,5 @@
 /**
- * \file     jsmn_iterate.hh
+ * \file     jsoneat/jsoneat.hh
  * \brief    helper class to iterate the JSMN token array and extract data
  * \author   Bert Winkelmann (github.com/zwiebert)
  */
@@ -176,7 +176,7 @@ public:
 
     /**
      * \brief        Get value as string instead of number or boolean
-     * \param dst          value will be written to dst
+     * \param dst    value will be written to dst
      * \return       false if value type is not JSMN_PRIMITIVE Or JSMN_STRING
      */
     template<size_t size>
@@ -185,8 +185,8 @@ public:
     }
     /**
      * \brief        Get value as string instead of number or boolean
-     * \param dst          value will be written to dst
-     * \size         space available in dst
+     * \param dst    value will be written to dst
+     * \param size   space available in dst
      * \return       false if value type is not JSMN_PRIMITIVE Or JSMN_STRING
      */
     bool getValueAsString(char *dst, size_t size) const {

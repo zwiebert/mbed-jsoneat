@@ -1,7 +1,6 @@
 /**
  * \file     jsmn_iterate.hh
- * \brief    helper class to iterate the JSMN token array and extract data
- * \author   Bert Winkelmann (github.com/zwiebert)
+ * \brief    deprecated header for backward compatibility
  */
 
 #pragma once
