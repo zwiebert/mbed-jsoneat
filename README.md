@@ -36,7 +36,7 @@
 </details>
 
 #### Usage
-   * `#include jsmn/jsmn_iterate.hh` to use wrapper class. 
+   * `#include` [jsmn/jsmn_iterate.hh](components/jsmn/include/jsmn/jsmn_iterate.hh) to use wrapper class. 
    * `#include jsmn/jsmn.h` to use pure Jsmn in some places. 
 
 #### Documentation
