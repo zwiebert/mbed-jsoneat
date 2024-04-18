@@ -1,4 +1,4 @@
-# jsmnit
+# JsoNeat
 
   Some C++ classes and templates to read JSON into objects in a flexible and robust way.
   
@@ -36,8 +36,8 @@
 </details>
 
 #### Usage
-   * `#include` [jsmn/jsmn_iterate.hh](components/jsmn/include/jsmn/jsmn_iterate.hh) to use wrapper class. 
-   * `#include jsmn/jsmn.h` to use pure Jsmn in some places. 
+   * `#include` [jsoneat/jsoneat.hh](components/jsmn/include/jsoneat/jsoneat.hh) to use wrapper classes. 
+   * `#include jsmn/jsmn.h` to use underlying Jsmn submodule directly at some places. 
 
 #### Documentation
    *  `make doxy-usr-view` builds the doc with doxygen and opens it in web-browser

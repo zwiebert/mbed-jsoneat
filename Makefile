@@ -114,7 +114,7 @@ $(foreach tgt,$(esp32testtgts_auto),$(eval $(call GEN_RULE,$(tgt))))
 HOST_TEST_BUILD_PATH=$(BUILD_BASE)/../host/test
 HOST_TEST_SRC_PATH=$(THIS_ROOT)/test/host_test
 
-.PHONY: test.cm.configure test.cm.build
+.PHONY: test.cm.configure test.cm.build config
 
 config_h:=$(HOST_TEST_BUILD_PATH)/config/sdkconfig.h
 config_cmake:=$(HOST_TEST_BUILD_PATH)/config/sdkconfig.cmake
@@ -128,11 +128,11 @@ Kconfig.projbuild:
 menuconfig $(_config):
 	mkdir -p $(config_dir) && cd $(config_dir) && menuconfig $(THIS_ROOT)/Kconfig.projbuild
 
-$(config_h) $(config_cmake): $(_config)
+$(config_h) $(config_cmake) config: $(_config)
 	python -m kconfgen  --kconfig $(THIS_ROOT)/Kconfig.projbuild --config $(_config) --output header $(config_h) --output cmake $(config_cmake)
 	cp $(config_h) $(config_cmake) $(THIS_ROOT)/test/host_test/ 
 
-test.cm.configure:
+test.cm.configure: $(config_h) $(config_cmake)
 	rm -fr $(HOST_TEST_BUILD_PATH)
 	mkdir -p $(HOST_TEST_BUILD_PATH)/config
 	make $(config_h) $(config_cmake)
