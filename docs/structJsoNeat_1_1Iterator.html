@@ -153,7 +153,7 @@ input_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 <tr class="separator:a165c86244ae7a3761d065332b175f579"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b5ee9664d18c3992f1dc5475ffb36f1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9b5ee9664d18c3992f1dc5475ffb36f1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structJsoNeat_1_1Iterator.html#a9b5ee9664d18c3992f1dc5475ffb36f1">getValue</a> (T &amp;dst) const</td></tr>
-<tr class="memdesc:a9b5ee9664d18c3992f1dc5475ffb36f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value \dst value will be written to dst.  <a href="structJsoNeat_1_1Iterator.html#a9b5ee9664d18c3992f1dc5475ffb36f1">More...</a><br /></td></tr>
+<tr class="memdesc:a9b5ee9664d18c3992f1dc5475ffb36f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value.  <a href="structJsoNeat_1_1Iterator.html#a9b5ee9664d18c3992f1dc5475ffb36f1">More...</a><br /></td></tr>
 <tr class="separator:a9b5ee9664d18c3992f1dc5475ffb36f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2cf96464274f495c4278066db3f255a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ab2cf96464274f495c4278066db3f255a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structJsoNeat_1_1Iterator.html#ab2cf96464274f495c4278066db3f255a">takeValue</a> (T &amp;dst)</td></tr>
@@ -161,10 +161,10 @@ input_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 <tr class="separator:ab2cf96464274f495c4278066db3f255a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac102fb4b0adf443b2dd5726c5798a835"><td class="memTemplParams" colspan="2">template&lt;size_t size&gt; </td></tr>
 <tr class="memitem:ac102fb4b0adf443b2dd5726c5798a835"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structJsoNeat_1_1Iterator.html#ac102fb4b0adf443b2dd5726c5798a835">getValueAsString</a> (char(&amp;dst)[size]) const</td></tr>
-<tr class="memdesc:ac102fb4b0adf443b2dd5726c5798a835"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value as string instead of number or boolean \dst value will be written to dst.  <a href="structJsoNeat_1_1Iterator.html#ac102fb4b0adf443b2dd5726c5798a835">More...</a><br /></td></tr>
+<tr class="memdesc:ac102fb4b0adf443b2dd5726c5798a835"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value as string instead of number or boolean.  <a href="structJsoNeat_1_1Iterator.html#ac102fb4b0adf443b2dd5726c5798a835">More...</a><br /></td></tr>
 <tr class="separator:ac102fb4b0adf443b2dd5726c5798a835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0421fee0054a21d08d33bd920918581"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structJsoNeat_1_1Iterator.html#ac0421fee0054a21d08d33bd920918581">getValueAsString</a> (char *dst, size_t size) const</td></tr>
-<tr class="memdesc:ac0421fee0054a21d08d33bd920918581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value as string instead of number or boolean \dst value will be written to dst \size space available in dst.  <a href="structJsoNeat_1_1Iterator.html#ac0421fee0054a21d08d33bd920918581">More...</a><br /></td></tr>
+<tr class="memdesc:ac0421fee0054a21d08d33bd920918581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value as string instead of number or boolean.  <a href="structJsoNeat_1_1Iterator.html#ac0421fee0054a21d08d33bd920918581">More...</a><br /></td></tr>
 <tr class="separator:ac0421fee0054a21d08d33bd920918581"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af67f03bedc81a9d70974d1f21929009f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structJsoNeat_1_1Iterator.html#af67f03bedc81a9d70974d1f21929009f">getValueAsString</a> () const</td></tr>
 <tr class="memdesc:af67f03bedc81a9d70974d1f21929009f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value as string null terminated string (in place)  <a href="structJsoNeat_1_1Iterator.html#af67f03bedc81a9d70974d1f21929009f">More...</a><br /></td></tr>
@@ -252,7 +252,13 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get value \dst value will be written to dst. </p>
+<p>Get value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>value will be written to dst </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>false if value type is not JSMN_PRIMITIVE Or JSMN_STRING </dd></dl>
 
 </div>
@@ -375,7 +381,13 @@ template&lt;typename input_type  = const char*&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get value as string instead of number or boolean \dst value will be written to dst \size space available in dst. </p>
+<p>Get value as string instead of number or boolean. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>value will be written to dst \size space available in dst </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>false if value type is not JSMN_PRIMITIVE Or JSMN_STRING </dd></dl>
 
 </div>
@@ -408,7 +420,13 @@ template&lt;size_t size&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get value as string instead of number or boolean \dst value will be written to dst. </p>
+<p>Get value as string instead of number or boolean. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>value will be written to dst </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>false if value type is not JSMN_PRIMITIVE Or JSMN_STRING </dd></dl>
 
 </div>
@@ -899,7 +917,7 @@ template&lt;typename input_type  = const char*&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classJsoNeat.html">JsoNeat</a></li><li class="navelem"><a class="el" href="structJsoNeat_1_1Iterator.html">Iterator</a></li>
-    <li class="footer">Generated on Thu Apr 18 2024 16:12:00 for JsoNeat by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu Apr 18 2024 16:17:52 for JsoNeat by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>
