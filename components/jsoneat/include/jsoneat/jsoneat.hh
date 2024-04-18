@@ -51,6 +51,16 @@ public:
     return m_json;
   }
 
+  /**
+   * \brief This has iterator functionality, but also provides lots of token related member functions
+   *
+   *        With Jsmn, the token holds indexes of the original JSON buffer.
+   *        Like a normal iterator, this struct holds a pointer to the token, which is an element of \ref m_tok_arr
+   *
+   *        To access the actual JSON data (\ref m_json in class \ref JsoNeat), \ref m_container in this struct holds a
+   *        references, which then can also be used to call member functions of JsoNeat object.
+   *
+   */
   struct Iterator {
     using iterator_category = std::forward_iterator_tag;
     using difference_type = std::ptrdiff_t;
