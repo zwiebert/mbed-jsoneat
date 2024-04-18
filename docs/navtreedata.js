@@ -24,8 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "components-mcu", "index.html", [
-    [ "JsoNeat", "index.html", null ],
+  [ "JsoNeat", "index.html", [
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -45,7 +44,6 @@ var NAVTREE =
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
-        [ "Enumerations", "globals_enum.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
@@ -54,8 +52,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"options_8hh.html#afc82ec8561e4f5a8c1fc53544d9bf6f5a1d7aff1d573ea4232caa4f004a014d38"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

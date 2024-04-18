@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['takevalue_180',['takeValue',['../structJsoNeat_1_1Iterator.html#ab2cf96464274f495c4278066db3f255a',1,'JsoNeat::Iterator::takeValue(T &amp;dst)'],['../structJsoNeat_1_1Iterator.html#a76f2cb8f12e2fe17dd7c834a396e6afc',1,'JsoNeat::Iterator::takeValue(T &amp;dst, const char *key)']]],
-  ['test_5fcase_181',['TEST_CASE',['../test__crash_8cc.html#a50609d2cbba9c62ab9cbec33fa06454a',1,'test_crash.cc']]],
-  ['test_5fcrash_2ecc_182',['test_crash.cc',['../test__crash_8cc.html',1,'']]],
-  ['test_5ftd_183',['test_td',['../test__crash_8cc.html#afe7dc28f986cbe24f13dbfbf9d7b138b',1,'test_crash.cc']]]
+  ['value_5fequals_5ffalse_59',['value_equals_false',['../structJsoNeat_1_1Iterator.html#a6a1214698ad789825327f756fffff60b',1,'JsoNeat::Iterator']]],
+  ['value_5fequals_5fnull_60',['value_equals_null',['../structJsoNeat_1_1Iterator.html#ae92a1c2e15b8c95f7146c1aad8546446',1,'JsoNeat::Iterator']]],
+  ['value_5fequals_5ftrue_61',['value_equals_true',['../structJsoNeat_1_1Iterator.html#af11cae0253898b444612ecb67c33c4e2',1,'JsoNeat::Iterator']]],
+  ['value_5fst_5fequal_62',['value_st_equal',['../structJsoNeat_1_1Iterator.html#ad27c0f372b0ff527b96ed555e0f1699a',1,'JsoNeat::Iterator']]],
+  ['value_5ftype_63',['value_type',['../structJsoNeat_1_1Iterator.html#ad466c25da6178daeefd2ec0ee3ab58d4',1,'JsoNeat::Iterator']]]
 ];

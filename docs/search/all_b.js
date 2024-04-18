@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['pointer_173',['pointer',['../classJsoNeat.html#ae1a2a76ba91a90087183c7b3dcc5fa08',1,'JsoNeat::pointer()'],['../structJsoNeat_1_1Iterator.html#a9d739efddf66f9d751012bb92143ca99',1,'JsoNeat::Iterator::pointer()']]]
+  ['readme_2emd_51',['README.md',['../README_8md.html',1,'']]],
+  ['reference_52',['reference',['../structJsoNeat_1_1Iterator.html#a39ffdccacbee63efd6945b85f92fc0de',1,'JsoNeat::Iterator']]]
 ];

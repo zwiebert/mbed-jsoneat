@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>components-mcu: README.md Source File</title>
+<title>JsoNeat: README.md Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,8 +25,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">components-mcu
+   <div id="projectname">JsoNeat
    </div>
+   <div id="projectbrief">Some JSON parse/iterate C++ classes build on top of Jsmn</div>
   </td>
  </tr>
  </tbody>
@@ -127,41 +128,42 @@ $(document).ready(function(){initNavTree('README_8md.html',''); initResizable();
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;   * `#include jsmn/jsmn.h` to use underlying Jsmn submodule directly at some places. </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;#### Documentation</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;   *  `make doxy-usr-view` builds the doc with doxygen and opens it in web-browser</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;   * see make help for more</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;#### Testing  </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;   *  `make host-test-all`  configure, build and runs all tests</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;#### Todo</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;&lt;details&gt; &lt;summary&gt;class names&lt;/summary&gt;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    * naming oft the classes could be updated to reflect some changes made on the way</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;&lt;/details&gt;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;&lt;details&gt; &lt;summary&gt;Add examples and tests&lt;/summary&gt;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;       * Tests are currently done in tests of components using this component. Examples can be found there also.</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;&lt;/details&gt;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;   </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;#### Git Repositories</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;&lt;details&gt; &lt;summary&gt;This repository &lt;/summary&gt;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  * This repository on [GitHub](https://github.com/zwiebert/jsmnit)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;&lt;/details&gt;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;&lt;details&gt; &lt;summary&gt;Required Submodules&lt;/summary&gt;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  * JSON parser/tokenizer: [jsmn](https://github.com/zserge/jsmn)</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;&lt;/details&gt;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;&lt;details&gt; &lt;summary&gt;Optional Submodules&lt;/summary&gt;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  * esp-idf/unity component to run tests on host: [host-test-idf](https://github.com/zwiebert/host-test-idf)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;&lt;/details&gt;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;   *  View [Online Documentation](https://zwiebert.github.io/JsoNeat/) generated by Doxygen</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;   *  `make doxy-usr-view` builds the doc with doxygen locallymand opens it in web-browser</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;   * see make help for more</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;#### Testing  </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;   *  `make host-test-all`  configure, build and runs all tests</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;#### Todo</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;&lt;details&gt; &lt;summary&gt;class names&lt;/summary&gt;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    * naming oft the classes could be updated to reflect some changes made on the way</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;&lt;/details&gt;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;&lt;details&gt; &lt;summary&gt;Add examples and tests&lt;/summary&gt;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;       * Tests are currently done in tests of components using this component. Examples can be found there also.</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;&lt;/details&gt;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;#### Git Repositories</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;&lt;details&gt; &lt;summary&gt;This repository &lt;/summary&gt;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  * This repository on [GitHub](https://github.com/zwiebert/jsmnit)</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;&lt;/details&gt;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;&lt;details&gt; &lt;summary&gt;Required Submodules&lt;/summary&gt;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  * JSON parser/tokenizer: [jsmn](https://github.com/zserge/jsmn)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;&lt;/details&gt;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;&lt;details&gt; &lt;summary&gt;Optional Submodules&lt;/summary&gt;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  * esp-idf/unity component to run tests on host: [host-test-idf](https://github.com/zwiebert/host-test-idf)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;&lt;/details&gt;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

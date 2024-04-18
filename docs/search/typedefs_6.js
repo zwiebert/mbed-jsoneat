@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reference_259',['reference',['../structJsoNeat_1_1Iterator.html#a39ffdccacbee63efd6945b85f92fc0de',1,'JsoNeat::Iterator']]]
+  ['value_5ftype_126',['value_type',['../structJsoNeat_1_1Iterator.html#ad466c25da6178daeefd2ec0ee3ab58d4',1,'JsoNeat::Iterator']]]
 ];
