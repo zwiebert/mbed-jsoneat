@@ -189,4 +189,5 @@ $(docs_html):$(DOXY_BUILD_PATH)/dev/input_files
 docs:$(docs_html)
 	-rm -rf docs
 	cp -r $(docs_html) docs
+	git add docs
 
