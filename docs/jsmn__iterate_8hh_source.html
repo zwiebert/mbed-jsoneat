@@ -88,26 +88,25 @@ $(document).ready(function(){initNavTree('jsmn__iterate_8hh_source.html',''); in
 <div class="contents">
 <a href="jsmn__iterate_8hh.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * \file     jsmn_iterate.hh</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * \brief    helper class to iterate the JSMN token array and extract data</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * \author   Bert Winkelmann (github.com/zwiebert)</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">pragma</span> <span class="preprocessor">once</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&quot;jsmn/jsmn.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">jsoneat</span><span class="preprocessor">/</span><span class="preprocessor">jsoneat</span><span class="preprocessor">.</span><span class="preprocessor">hh</span><span class="preprocessor">&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">using</span> Jsmn_String = JsoNeat&lt;<span class="keywordtype">char</span> *&gt;; <span class="comment">///&lt; deprecated</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">using</span> Jsmn_Cstring = JsoNeat&lt;<span class="keyword">const</span> <span class="keywordtype">char</span> *&gt;; <span class="comment">///&lt; deprecated</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">using</span> JsmnBase = Jsmn_Cstring; <span class="comment">///&lt; deprecated</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">Jsmn</span> <span class="preprocessor">JsoNeat_fs</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * \brief    deprecated header for backward compatibility</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">pragma</span> <span class="preprocessor">once</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&quot;jsmn/jsmn.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="preprocessor">&lt;</span><span class="preprocessor">jsoneat</span><span class="preprocessor">/</span><span class="preprocessor">jsoneat</span><span class="preprocessor">.</span><span class="preprocessor">hh</span><span class="preprocessor">&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">using</span> Jsmn_String = JsoNeat&lt;<span class="keywordtype">char</span> *&gt;; <span class="comment">///&lt; deprecated</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">using</span> Jsmn_Cstring = JsoNeat&lt;<span class="keyword">const</span> <span class="keywordtype">char</span> *&gt;; <span class="comment">///&lt; deprecated</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">using</span> JsmnBase = Jsmn_Cstring; <span class="comment">///&lt; deprecated</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">Jsmn</span> <span class="preprocessor">JsoNeat_fs</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_429598433a12862c8fc4e66f09ae27ba.html">jsmn</a></li><li class="navelem"><a class="el" href="jsmn__iterate_8hh.html">jsmn_iterate.hh</a></li>
-    <li class="footer">Generated on Thu Apr 18 2024 16:17:52 for JsoNeat by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu Apr 18 2024 16:31:38 for JsoNeat by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>
