@@ -36,7 +36,5 @@ var structJsoNeat_1_1Iterator =
     [ "operator!=", "structJsoNeat_1_1Iterator.html#a27aed9f3ea67a677964fa51de28a5824", null ],
     [ "operator<", "structJsoNeat_1_1Iterator.html#ab93432f4dfa55eced35e0cdbad3a7fe3", null ],
     [ "operator==", "structJsoNeat_1_1Iterator.html#adf9a9358b475317bd816d7b47a0f5cd1", null ],
-    [ "operator>", "structJsoNeat_1_1Iterator.html#ab8d0be5179248add84ae0c9ef40a7f06", null ],
-    [ "m_container", "structJsoNeat_1_1Iterator.html#a217f6ad802e213f9a8454ee9b006dd63", null ],
-    [ "m_ptr", "structJsoNeat_1_1Iterator.html#a2a3b609f8c07f3a95a4a7f40a25e1274", null ]
+    [ "operator>", "structJsoNeat_1_1Iterator.html#ab8d0be5179248add84ae0c9ef40a7f06", null ]
 ];

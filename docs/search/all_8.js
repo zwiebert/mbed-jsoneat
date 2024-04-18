@@ -1,11 +1,7 @@
 var searchData=
 [
-  ['m_5fcontainer_31',['m_container',['../structJsoNeat_1_1Iterator.html#a217f6ad802e213f9a8454ee9b006dd63',1,'JsoNeat::Iterator']]],
-  ['m_5fjson_32',['m_json',['../classJsoNeat.html#a6262a810e520063efdb53ed3b2f2af55',1,'JsoNeat']]],
-  ['m_5fnmb_5ftok_33',['m_nmb_tok',['../classJsoNeat.html#a824e6ee5fbe07b6e6b8f444215ac7bcf',1,'JsoNeat']]],
-  ['m_5fptr_34',['m_ptr',['../structJsoNeat_1_1Iterator.html#a2a3b609f8c07f3a95a4a7f40a25e1274',1,'JsoNeat::Iterator']]],
-  ['m_5ftok_35',['m_tok',['../classJsoNeat.html#a5c6822eb531a3c991567f0a0bcbe5052',1,'JsoNeat']]],
-  ['m_5ftok_5farr_36',['m_tok_arr',['../classJsoNeat__fs.html#a4c3a56cce3e0853aa6dc98960d33ec00',1,'JsoNeat_fs']]],
-  ['m_5ftok_5fheap_5falloc_37',['m_tok_heap_alloc',['../classJsoNeat.html#ad6177fa686149f4752209f50ce0b679b',1,'JsoNeat']]],
-  ['m_5ftok_5fmax_38',['m_tok_max',['../classJsoNeat.html#a452562caa7f76f393bef4fff2a1c6086',1,'JsoNeat']]]
+  ['value_5fequals_5ffalse_18',['value_equals_false',['../structJsoNeat_1_1Iterator.html#a6a1214698ad789825327f756fffff60b',1,'JsoNeat::Iterator']]],
+  ['value_5fequals_5fnull_19',['value_equals_null',['../structJsoNeat_1_1Iterator.html#ae92a1c2e15b8c95f7146c1aad8546446',1,'JsoNeat::Iterator']]],
+  ['value_5fequals_5ftrue_20',['value_equals_true',['../structJsoNeat_1_1Iterator.html#af11cae0253898b444612ecb67c33c4e2',1,'JsoNeat::Iterator']]],
+  ['value_5fst_5fequal_21',['value_st_equal',['../structJsoNeat_1_1Iterator.html#ad27c0f372b0ff527b96ed555e0f1699a',1,'JsoNeat::Iterator']]]
 ];

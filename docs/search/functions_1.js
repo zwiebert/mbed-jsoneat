@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['copy_5fstring_76',['copy_string',['../classJsoNeat.html#a9146af03b4f72099b7482f61e51f1453',1,'JsoNeat']]]
+  ['end_28',['end',['../classJsoNeat.html#a4ddaf5882f454d89c71fbbc7eec13bda',1,'JsoNeat']]]
 ];

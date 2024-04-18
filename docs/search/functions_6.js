@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['jsoneat_85',['JsoNeat',['../classJsoNeat.html#aa7a5b8ddda67e7f447bc4467b74b4dd1',1,'JsoNeat::JsoNeat(input_type json, jsmntok_t *tok, unsigned tok_max)'],['../classJsoNeat.html#a11bae02cc96a17a7c9aaa006ef819707',1,'JsoNeat::JsoNeat(input_type json, unsigned tok_max)']]],
-  ['jsoneat_5ffs_86',['JsoNeat_fs',['../classJsoNeat__fs.html#ae6cfa7917b912d2f55c0992a56318bf5',1,'JsoNeat_fs']]]
+  ['value_5fequals_5ffalse_37',['value_equals_false',['../structJsoNeat_1_1Iterator.html#a6a1214698ad789825327f756fffff60b',1,'JsoNeat::Iterator']]],
+  ['value_5fequals_5fnull_38',['value_equals_null',['../structJsoNeat_1_1Iterator.html#ae92a1c2e15b8c95f7146c1aad8546446',1,'JsoNeat::Iterator']]],
+  ['value_5fequals_5ftrue_39',['value_equals_true',['../structJsoNeat_1_1Iterator.html#af11cae0253898b444612ecb67c33c4e2',1,'JsoNeat::Iterator']]],
+  ['value_5fst_5fequal_40',['value_st_equal',['../structJsoNeat_1_1Iterator.html#ad27c0f372b0ff527b96ed555e0f1699a',1,'JsoNeat::Iterator']]]
 ];

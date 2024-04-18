@@ -1,28 +1,13 @@
 var classJsoNeat =
 [
     [ "Iterator", "structJsoNeat_1_1Iterator.html", "structJsoNeat_1_1Iterator" ],
-    [ "pointer", "classJsoNeat.html#ae1a2a76ba91a90087183c7b3dcc5fa08", null ],
     [ "JsoNeat", "classJsoNeat.html#aa7a5b8ddda67e7f447bc4467b74b4dd1", null ],
     [ "JsoNeat", "classJsoNeat.html#a11bae02cc96a17a7c9aaa006ef819707", null ],
     [ "~JsoNeat", "classJsoNeat.html#adf064bfa72d016cd94eb7015d949b478", null ],
     [ "begin", "classJsoNeat.html#aade43698fae0cf9c2785e5fa458aae1c", null ],
-    [ "copy_string", "classJsoNeat.html#a9146af03b4f72099b7482f61e51f1453", null ],
-    [ "do_parse", "classJsoNeat.html#a36a88c7643b68970ed785566b62a2b8b", null ],
     [ "end", "classJsoNeat.html#a4ddaf5882f454d89c71fbbc7eec13bda", null ],
     [ "get_json", "classJsoNeat.html#a1c09fe863d8d3b685f54b043ef80e2bf", null ],
-    [ "get_value", "classJsoNeat.html#aa1f2011ca347c0f2456c3e07cd97b909", null ],
-    [ "get_value", "classJsoNeat.html#a91a2570bdb13f34df4416b46876c6bb2", null ],
-    [ "get_value", "classJsoNeat.html#ad838f90ff1825d06eba26f70d94e3cfb", null ],
-    [ "get_value", "classJsoNeat.html#aa1aa59a7e8b8053ab2ba1b7f485e9e10", null ],
-    [ "get_value", "classJsoNeat.html#a65d82b09b46027f0a997dcdf228ecc8e", null ],
-    [ "get_value_as_string", "classJsoNeat.html#a2e30dc88801590ef2e9bdd1c27a52cf5", null ],
-    [ "get_value_as_string", "classJsoNeat.html#ac36e08521f592a77b19a75f1c83bdea8", null ],
     [ "operator bool", "classJsoNeat.html#a66c4cb8fd75d88d46fdef3b358fc4da7", null ],
     [ "skip_key_and_value", "classJsoNeat.html#aa8af5808bbb31b2112211c124b16c643", null ],
-    [ "skip_value", "classJsoNeat.html#a4121c8b1bc74397ad90fffbc3b457145", null ],
-    [ "m_json", "classJsoNeat.html#a6262a810e520063efdb53ed3b2f2af55", null ],
-    [ "m_nmb_tok", "classJsoNeat.html#a824e6ee5fbe07b6e6b8f444215ac7bcf", null ],
-    [ "m_tok", "classJsoNeat.html#a5c6822eb531a3c991567f0a0bcbe5052", null ],
-    [ "m_tok_heap_alloc", "classJsoNeat.html#ad6177fa686149f4752209f50ce0b679b", null ],
-    [ "m_tok_max", "classJsoNeat.html#a452562caa7f76f393bef4fff2a1c6086", null ]
+    [ "skip_value", "classJsoNeat.html#a4121c8b1bc74397ad90fffbc3b457145", null ]
 ];

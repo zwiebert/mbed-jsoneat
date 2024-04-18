@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['json_106',['json',['../test__crash_8cc.html#ac78b91bb325cbe5af8496fdee4d2af89',1,'test_crash.cc']]],
-  ['json3_107',['json3',['../test__crash_8cc.html#a7967943c105112c9a269e2a8bffa468a',1,'test_crash.cc']]]
+  ['otok_5fstrings_45',['otok_strings',['../options_8hh.html#af759dba14df6c2fbe14f02e0b2f995b4',1,'options.hh']]]
 ];

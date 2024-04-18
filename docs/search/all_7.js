@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['keyisequal_29',['keyIsEqual',['../structJsoNeat_1_1Iterator.html#a04828ccd9abbd5e8888eb90b7bf32cd2',1,'JsoNeat::Iterator::keyIsEqual(const char *key) const'],['../structJsoNeat_1_1Iterator.html#a885b83a2e3f7cf70525b69d8f36c7d4f',1,'JsoNeat::Iterator::keyIsEqual(const char *key, jsmntype_t val_type) const']]],
-  ['keystartswith_30',['keyStartsWith',['../structJsoNeat_1_1Iterator.html#ac0753c6c561c79d1bfe7f04a673183b4',1,'JsoNeat::Iterator::keyStartsWith(const char *key) const'],['../structJsoNeat_1_1Iterator.html#a165c86244ae7a3761d065332b175f579',1,'JsoNeat::Iterator::keyStartsWith(const char *key, jsmntype_t val_type) const']]]
+  ['takevalue_17',['takeValue',['../structJsoNeat_1_1Iterator.html#ab2cf96464274f495c4278066db3f255a',1,'JsoNeat::Iterator::takeValue(T &amp;dst)'],['../structJsoNeat_1_1Iterator.html#a76f2cb8f12e2fe17dd7c834a396e6afc',1,'JsoNeat::Iterator::takeValue(T &amp;dst, const char *key)']]]
 ];
