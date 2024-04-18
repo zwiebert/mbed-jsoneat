@@ -154,7 +154,7 @@ public:
 
     /**
      * \brief        Get value
-     * \dst          value will be written to dst
+     * \param dst          value will be written to dst
      * \return       false if value type is not JSMN_PRIMITIVE Or JSMN_STRING
      */
     template<typename T>
@@ -176,7 +176,7 @@ public:
 
     /**
      * \brief        Get value as string instead of number or boolean
-     * \dst          value will be written to dst
+     * \param dst          value will be written to dst
      * \return       false if value type is not JSMN_PRIMITIVE Or JSMN_STRING
      */
     template<size_t size>
@@ -185,7 +185,7 @@ public:
     }
     /**
      * \brief        Get value as string instead of number or boolean
-     * \dst          value will be written to dst
+     * \param dst          value will be written to dst
      * \size         space available in dst
      * \return       false if value type is not JSMN_PRIMITIVE Or JSMN_STRING
      */
