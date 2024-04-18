@@ -301,15 +301,43 @@ public:
      * \return success.
      */
     bool skip_value() {
-      return m_container.skip_value(*this);
+      auto &it = *this;
+      if (!it)
+        return false;
+
+      if (it->type == JSMN_OBJECT) {
+        auto count = it->size;
+        for (++it; count > 0 && it; --count) {
+
+          assert(it->type == JSMN_STRING);
+          skip_key_and_value();
+        }
+        return true;
+      }
+
+      if (it->type == JSMN_ARRAY) {
+        auto count = it->size;
+        for (++it; count > 0 && it; --count) {
+          skip_value();
+        }
+        return true;
+      }
+
+      ++it;
+      return true;
     }
+
     /**
      * \brief skip this key/value pair (in and object)
      *
      * \return success.
      */
     bool skip_key_and_value() {
-      return m_container.skip_key_and_value(*this);
+      auto &it = *this;
+      ++it;
+      if (!it)
+        return false;
+      return skip_value();
     }
 
   private:
@@ -334,50 +362,6 @@ public:
     return Iterator(&m_tok[m_nmb_tok], *this);
   }
 
-  /**
-   * \brief skip value (of an array)
-   *
-   * \param it   iterator pointing to the value to skip
-   * \return     success
-   */
-  static bool skip_value(Iterator &it) {
-    if (!it)
-      return false;
-
-    if (it->type == JSMN_OBJECT) {
-      auto count = it->size;
-      for (++it; count > 0 && it; --count) {
-
-        assert(it->type == JSMN_STRING);
-        skip_key_and_value(it);
-      }
-      return true;
-    }
-
-    if (it->type == JSMN_ARRAY) {
-      auto count = it->size;
-      for (++it; count > 0 && it; --count) {
-        skip_value(it);
-      }
-      return true;
-    }
-
-    ++it;
-    return true;
-  }
-
-  /**
-   * \brief      skip a key/value pair (in an object)
-   *
-   * \param it   iterator pointing to the key/value pair to skip
-   * \return     success
-   */
-  static bool skip_key_and_value(Iterator &it) {
-    ++it;
-    if (!it)
-      return false;
-    return skip_value(it);
-  }
 
 private:
   int do_parse(const char *json) {
