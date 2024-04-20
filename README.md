@@ -9,12 +9,12 @@
 
 
 #### Documentation
-   *  View [API documentation](https://zwiebert.github.io/JsoNeat) 
+   *  View [API documentation](https://zwiebert.github.io/mbed-jsoneat) 
    *  Create API documentation `make doxy-api-view`
    *  Crate source documentation `make doxy-dev-view`
 
 #### Usage
-   * `#include` [jsoneat/jsoneat.hh](components/jsmn/include/jsoneat/jsoneat.hh) to use wrapper classes. 
+   * `#include` [jsoneat/jsoneat.hh](components/jsoneat/include/jsoneat/jsoneat.hh) to use wrapper classes. 
    * `#include jsmn/jsmn.h` to use underlying Jsmn submodule directly at some places. 
    
 #### Build
@@ -45,5 +45,5 @@
 
    
 #### Online Git Repositories
-  * This repository on [GitHub](https://github.com/zwiebert/jsmnit)
+  * This repository on [GitHub](https://github.com/zwiebert/mbed-jsoneat)
   * JSON parser/tokenizer submodule: [jsmn](https://github.com/zserge/jsmn)
