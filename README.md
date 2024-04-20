@@ -38,9 +38,10 @@
    * add source path: `external/jsmnit/components/jsmn/src`
 
 
-
-#### Testing  
-   *  `make host-test-all`  configure, build and runs all tests
+#### Testing
+   * work in progress
+   * for now tests are run from  application or a separate test package. Using git submodule to get all dependencies was not feasable.
+   
 
    
 #### Online Git Repositories
