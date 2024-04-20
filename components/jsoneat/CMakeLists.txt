@@ -10,7 +10,7 @@ idf_component_register(SRCS ${srcs}
 )
 
 else()
-add_library(jsmn STATIC ${srcs})
-target_include_directories(jsmn PUBLIC include)
+add_library(jsoneat STATIC ${srcs})
+target_include_directories(jsoneat PUBLIC include)
 
 endif()
