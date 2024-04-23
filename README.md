@@ -9,34 +9,14 @@
 
 
 #### Documentation
-   *  View [API documentation](https://zwiebert.github.io/mbed-jsoneat) 
-   *  Create API documentation `make doxy-api-view`
-   *  Crate source documentation `make doxy-dev-view`
+   *  View [API documentation](https://zwiebert.github.io/mbed-jsoneat/api) 
+   *  Create and view API documentation `make doxy-api-view`
+   *  Crate and view source documentation `make doxy-dev-view`
 
 #### Usage
    * `#include` [jsoneat/jsoneat.hh](components/jsoneat/include/jsoneat/jsoneat.hh) to use wrapper classes. 
    * `#include jsmn/jsmn.h` to use underlying Jsmn submodule directly at some places. 
    
-#### Build
-
-#####  Build in ESP-IDF Project
-   * The component(s) are located in subdirectory `./components`
-   * The required external components are located in subdirectory `./external`
-   * I place this repository into project subdirectory `./external`. Then I use file(GLOB ..)
-     to add all components directories to `EXTRA_COMPONENTS_DIR` like so:
-       * `file(GLOB extra_dirs external/*/components external/*/external/*/components)`      
-       * `list(APPEND EXTRA_COMPONENTS_DIR ${extra_dirs})`
-       * `REQUIRE ... jsmn ...`
-
-##### Build in CMake Project
-   * source-CMakeLists.txt: `target_link_libraries(main PUBLIC ... jsmn ...)`
-   * project-CMakeLists.txt: `add_subdirectory(external/jsmnit/components/jsmn)`
-
-
-##### Build in IDE like STM32CubeIde
-   * add include path: `external/jsmnit/components/jsmn/include`
-   * add source path: `external/jsmnit/components/jsmn/src`
-
 
 #### Testing
    * work in progress
