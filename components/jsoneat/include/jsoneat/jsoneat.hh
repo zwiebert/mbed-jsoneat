@@ -84,10 +84,19 @@ public:
      */
     bool value_st_equal(const char *s, jsmntype_t type) const {
       const unsigned slen = strlen(s);
-      return m_ptr->type == type && slen == m_ptr->end - m_ptr->start // same length
-      && strncmp(m_container.get_json() + m_ptr->start, s, slen) == 0; // same content
 
+      if (m_ptr->type != type) // not same type
+        return false;
+
+      if (slen != m_ptr->end - m_ptr->start) // not same length
+        return false;
+
+      if(strncmp(m_container.get_json() + m_ptr->start, s, slen) != 0) // not same content
+        return false;
+
+     return true;
     }
+
     /**
      * \brief  test for value being null pointer
      * \return  true for match
@@ -338,6 +347,18 @@ public:
       if (!it)
         return false;
       return skip_value();
+    }
+
+    /**
+     * \brief skip this key
+     *
+     * \return success.
+     */
+    bool skip_key() {
+      auto &it = *this;
+      assert (it->type == JSMN_STRING);
+      ++it;
+      return true;
     }
 
   private:
