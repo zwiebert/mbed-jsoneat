@@ -324,6 +324,16 @@ public:
       return m_ptr;
     }
 
+    Iterator operator+(int n) {
+      Iterator tmp = *this;
+      return tmp += n;
+    }
+
+    Iterator operator-(int n) {
+      Iterator tmp = *this;
+      return tmp -= n;
+    }
+
     Iterator& operator+=(int n) {
       m_ptr += n;
       return *this;
