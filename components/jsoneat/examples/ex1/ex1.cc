@@ -1,7 +1,6 @@
 #include "jsmn/jsmn.h"
 #include "jsmn/jsmn_iterate.hh"
 
-
 struct data {
   int a;
   bool b;
@@ -132,53 +131,54 @@ public:
   char s[32];
 
 public:
+
+  /**
+   * \brief       Public member template to de-serialize from a JSON string
+   * \tparam T    Type of JSON string like char *, const char *, std::string, ...
+   * \param json  JSON string
+   * \return      success
+   */
   template<typename T, typename std::enable_if<!std::is_class<T> { }, bool>::type = true>
   bool from_json(T json) {
+    // tokenize JSON string using JSMN
     auto jsmn = Jsmn<32, T>(json);
-
     if (!jsmn)
       return false;
 
+    // pass the rest of the work to an overloaded from_json() member
     auto it = jsmn.begin();
     return from_json(it);
   }
 
+  /**
+   * \brief        Public member template overload to de-serialize from JSMN tokens
+   * \tparam jsmn_iterator  Type of iterator (depending on the type of token array/JSON string type)
+   * \param it     Iterator of a JSMN_OBJECT token in a token array
+   * \return       success
+   */
   template<typename jsmn_iterator = Jsmn_String::Iterator, typename std::enable_if<std::is_class<jsmn_iterator> { }, bool>::type = true>
   bool from_json(jsmn_iterator &it) {
     assert(it->type == JSMN_OBJECT);
 
-    using token_handler_fun_type = bool (*)(self_type &self, jsmn_iterator &it, int &err);
-    static const token_handler_fun_type tok_processRootChilds_funs[] = { //
-        [](self_type &self, jsmn_iterator &it, int &err) -> bool {
-          if ((it.takeValue(self.a, "a") //
-          || it.takeValue(self.b, "b") //
-              || it.takeValue(self.c, "c") //
-              || it.takeValue(self.s, "s") //
-          )) {
-            return true;
-          }
-          return false;
-        },
-
-        [](self_type &self, jsmn_iterator &it, int &err) -> bool { // Throw away unwanted objects
-          return it.skip_key_and_value();
-        } };
-
-    int err = 0;
     auto count = it->size;
     for (++it; count > 0 && it; --count) {
-      for (auto fun : tok_processRootChilds_funs) {
-        if (fun(*this, it, err))
-          break;
-      }
+      if (!(it.takeValue(a, "a") //
+      || it.takeValue(b, "b") //
+          || it.takeValue(c, "c") //
+          || it.takeValue(s, "s") //
+          // || it.skip_key_and_value() // skip unknown key/value pairs here or fail
+      ))
+        return false; // fail for unknown keys
     }
-    return !err;
-
+    return true;
   }
 };
 
 static void example_data_class() {
+  // serialized object data in JSON format
   char json_string[] = R"({"a":-1, "b":true, "c":3, "s":"hello dc root"})";
+
+  // Object with a from_json() member template function
   data_class json_data = { };
 
   if (json_data.from_json(json_string)) {
@@ -215,7 +215,18 @@ public:
   bool from_json(jsmn_iterator &it) {
     assert(it->type == JSMN_OBJECT);
 
+    /**
+     * \\brief               function pointer type used in array of handlers
+     * \param self[in]       *this reference passed from calling member function from_json()
+     * \param it[in,out]     iterator reference. if a handler returns true, it also advances this iterator.
+     * \param err[out]       pass count of errors encountered to caller
+     * \return               true if tokens were handled
+     */
     using token_handler_fun_type = bool (*)(self_type &self, jsmn_iterator &it, int &err);
+
+    /**
+     *  array of handlers to handle the JSON for each of our members
+     */
     static const token_handler_fun_type tok_processRootChilds_funs[] = { //
 
         [](self_type &self, jsmn_iterator &it, int &err) -> bool {
@@ -255,6 +266,9 @@ public:
           return false;
         },
 
+        /*
+         * skip/throw-away handler for unknown JSON keys
+         */
         [](self_type &self, jsmn_iterator &it, int &err) -> bool { // Throw away unwanted objects
           return it.skip_key_and_value();
         } };
