@@ -129,6 +129,7 @@ public:
   bool b;
   unsigned c;
   char s[32];
+  int ia[4];
 
 public:
 
@@ -166,6 +167,7 @@ public:
       || it.takeValue(b, "b") //
           || it.takeValue(c, "c") //
           || it.takeValue(s, "s") //
+          || it.takeValueArray(ia, "ia") //
           // || it.skip_key_and_value() // skip unknown key/value pairs here or fail
       ))
         return false; // fail for unknown keys
@@ -176,13 +178,14 @@ public:
 
 static void example_data_class() {
   // serialized object data in JSON format
-  char json_string[] = R"({"a":-1, "b":true, "c":3, "s":"hello dc root"})";
+  char json_string[] = R"({"a":-1, "b":true, "c":3, "s":"hello dc root", "ia":[1, 2, 3, 4]})";
 
   // Object with a from_json() member template function
   data_class json_data = { };
 
   if (json_data.from_json(json_string)) {
-    printf("data_class object: a=%d, b=%d, c=%d, s=%s\n", json_data.a, json_data.b, json_data.c, json_data.s);
+    printf("data_class object: a=%d, b=%d, c=%d, s=%s, ia=[%d, %d, %d, %d]\n", json_data.a, json_data.b, json_data.c, json_data.s,
+        json_data.ia[0], json_data.ia[1],json_data.ia[2],json_data.ia[3]);
   }
 }
 
@@ -194,15 +197,15 @@ class nested_data_class {
 public:
   data_class da;
   data_class db;
+  data_class darr[4];
   int a;
   bool b;
   unsigned c;
   char s[32];
-
 public:
   template<typename T, typename std::enable_if<!std::is_class<T> { }, bool>::type = true>
   bool from_json(T json) {
-    auto jsmn = Jsmn<32, T>(json);
+    auto jsmn = Jsmn<128, T>(json);
 
     if (!jsmn)
       return false;
@@ -215,86 +218,37 @@ public:
   bool from_json(jsmn_iterator &it) {
     assert(it->type == JSMN_OBJECT);
 
-    /**
-     * \\brief               function pointer type used in array of handlers
-     * \param self[in]       *this reference passed from calling member function from_json()
-     * \param it[in,out]     iterator reference. if a handler returns true, it also advances this iterator.
-     * \param err[out]       pass count of errors encountered to caller
-     * \return               true if tokens were handled
-     */
-    using token_handler_fun_type = bool (*)(self_type &self, jsmn_iterator &it, int &err);
-
-    /**
-     *  array of handlers to handle the JSON for each of our members
-     */
-    static const token_handler_fun_type tok_processRootChilds_funs[] = { //
-
-        [](self_type &self, jsmn_iterator &it, int &err) -> bool {
-          if (it.keyIsEqual("da", JSMN_OBJECT)) {
-            it.skip_key();
-            if (!self.da.from_json(it)) {
-              ++err;
-              it.skip_value();
-            }
-            return true;
-          }
-          return false;
-
-        },
-
-        [](self_type &self, jsmn_iterator &it, int &err) -> bool {
-          if (it.keyIsEqual("db", JSMN_OBJECT)) {
-            it.skip_key();
-            if (!self.db.from_json(it)) {
-              ++err;
-              it.skip_value();
-            }
-            return true;
-          }
-          return false;
-
-        },
-
-        [](self_type &self, jsmn_iterator &it, int &err) -> bool {
-          if ((it.takeValue(self.a, "a") //
-          || it.takeValue(self.b, "b") //
-              || it.takeValue(self.c, "c") //
-              || it.takeValue(self.s, "s") //
-          )) {
-            return true;
-          }
-          return false;
-        },
-
-        /*
-         * skip/throw-away handler for unknown JSON keys
-         */
-        [](self_type &self, jsmn_iterator &it, int &err) -> bool { // Throw away unwanted objects
-          return it.skip_key_and_value();
-        } };
-
-    int err = 0;
     auto count = it->size;
     for (++it; count > 0 && it; --count) {
-      for (auto fun : tok_processRootChilds_funs) {
-        if (fun(*this, it, err))
-          break;
-      }
+      if (!(it.takeValue(a, "a") //
+      || it.takeValue(b, "b") //
+          || it.takeValue(c, "c") //
+          || it.takeValue(s, "s") //
+          || it.takeObject(da, "da") //
+          || it.takeObject(db, "db") //
+          || it.takeObjectArray(darr, "darr") //
+          // || it.skip_key_and_value() // skip unknown key/value pairs here or fail
+      ))
+        return false; // fail for unknown keys
     }
-    return !err;
+    return true;
 
   }
 };
 
 static void example_nested_data_class() {
   char json_string[] =
-      R"({"da":{"a":-1, "b":true, "c":3, "s":"hello da"}, "db":{"a":-1, "b":true, "c":3, "s":"hello db"}, "a":-1, "b":true, "c":3, "s":"hello ndc rooot"})";
+      R"({"da":{"a":-1, "b":true, "c":3, "s":"hello da"}, "db":{"a":-1, "b":true, "c":3, "s":"hello db"}, "darr":[{"a":-1, "b":true, "c":3, "s":"hello darr[0]"},{"a":-1, "b":true, "c":3, "s":"hello darr[1]"},{"a":-1, "b":true, "c":3, "s":"hello darr[2]"},{"a":-1, "b":true, "c":3, "s":"hello darr[3]"}], "a":-1, "b":true, "c":3, "s":"hello ndc rooot"})";
 
   nested_data_class json_data = { };
 
   if (json_data.from_json(json_string) || true) {
     printf("nested_data_class object:da.a=%d, da.b=%d, da.c=%d, da.s=%s\n", json_data.da.a, json_data.da.b, json_data.da.c, json_data.da.s);
     printf("nested_data_class object:db.a=%d, db.b=%d, db.c=%d, db.s=%s\n", json_data.db.a, json_data.db.b, json_data.db.c, json_data.db.s);
+    printf("nested_data_class object:darr[0].a=%d, darr[0].b=%d, darr[0].c=%d, darr[0].s=%s\n", json_data.darr[0].a, json_data.darr[0].b, json_data.darr[0].c, json_data.darr[0].s);
+    printf("nested_data_class object:darr[1].a=%d, darr[1].b=%d, darr[1].c=%d, darr[1].s=%s\n", json_data.darr[1].a, json_data.darr[1].b, json_data.darr[1].c, json_data.darr[1].s);
+    printf("nested_data_class object:darr[2].a=%d, darr[2].b=%d, darr[2].c=%d, darr[2].s=%s\n", json_data.darr[2].a, json_data.darr[2].b, json_data.darr[2].c, json_data.darr[2].s);
+    printf("nested_data_class object:darr[3].a=%d, darr[3].b=%d, darr[3].c=%d, darr[3].s=%s\n", json_data.darr[3].a, json_data.darr[3].b, json_data.darr[3].c, json_data.darr[3].s);
     printf("nested_data_class object: a=%d, b=%d, c=%d, s=%s\n", json_data.a, json_data.b, json_data.c, json_data.s);
   }
 }

@@ -9,11 +9,15 @@
 #include "jsmn/jsmn.h"
 
 #include <iterator>
+#include <type_traits>
 #include <cstddef>
 #include <cstring>
 #include <cstdlib>
 #include <cassert>
 #include <string>
+
+//template <class T> // concept
+//concept is_class = std::is_class<T>::value;
 
 /**
  * \brief  Parse JSON into tokens and iterate over it. Will handle all allocations.
@@ -73,7 +77,6 @@ public:
         m_ptr(ptr), m_container(container) {
     }
 
-
   public:
 
     /**
@@ -91,10 +94,10 @@ public:
       if (slen != m_ptr->end - m_ptr->start) // not same length
         return false;
 
-      if(strncmp(m_container.get_json() + m_ptr->start, s, slen) != 0) // not same content
+      if (strncmp(m_container.get_json() + m_ptr->start, s, slen) != 0) // not same content
         return false;
 
-     return true;
+      return true;
     }
 
     /**
@@ -248,6 +251,71 @@ public:
       return true;
     }
 
+    /**
+     * \brief        Get values from array and advance iterator
+     * \tparam T     type of array members
+     * \tparam N     array_size
+     * \param  key   key to match or nullptr to match any key
+     * \param  dst   values will be written to array dst
+     * \return       success
+     */
+    template<typename T, std::size_t N>
+    bool takeValueArray(T (&dst)[N], const char *key) {
+      if (!keyIsEqual(key, JSMN_ARRAY))
+        return false;
+      skip_key();
+
+      auto &it = *this;
+
+      auto count = it->size; // get array size
+      ++it; // skip array token
+      for (int i = 0; i < count && i < N; ++i) {
+        if (!m_container.get_value(dst[i], m_ptr))
+          return false;
+        ++it;
+      }
+      return true;
+    }
+
+    /**
+     * \brief        Get object of key/value pair and advance iterator
+     * \param  key   key to match or nullptr to match any key
+     * \param  dst   object will be written to dst
+     * \return       false if key does not match, or value type is not JSMN_OBJECT
+     */
+    template<typename T>
+    bool takeObject(T &dst, const char *key) {
+      if (!keyIsEqual(key, JSMN_OBJECT))
+        return false;
+      skip_key();
+      return dst.from_json(*this);
+    }
+
+    /**
+     * \brief        Get objects from array and advance iterator
+     * \tparam T     type of array members
+     * \tparam N     array_size
+     * \param  key   key to match or nullptr to match any key
+     * \param  dst   objects will be written to array dst
+     * \return       success
+     */
+    template<typename T, int N>
+    bool takeObjectArray(T (&dst)[N], const char *key) {
+      if (!keyIsEqual(key, JSMN_ARRAY))
+        return false;
+      skip_key();
+
+      auto &it = *this;
+
+      auto count = it->size; // get array size
+      ++it; // skip array token
+      for (int i = 0; i < count && i < N; ++i) {
+        if (!dst[i].from_json(it))
+          return false;
+      }
+      return true;
+    }
+
   public: // operators
     reference operator*() const {
       return *m_ptr;
@@ -356,7 +424,7 @@ public:
      */
     bool skip_key() {
       auto &it = *this;
-      assert (it->type == JSMN_STRING);
+      assert(it->type == JSMN_STRING);
       ++it;
       return true;
     }
@@ -382,7 +450,6 @@ public:
   Iterator end() {
     return Iterator(&m_tok[m_nmb_tok], *this);
   }
-
 
 private:
   int do_parse(const char *json) {
@@ -444,11 +511,11 @@ private:
   bool get_value(bool &dst, pointer ptr) const {
     char buf[32];
     if (ptr->type == JSMN_PRIMITIVE && copy_string(buf, sizeof buf, ptr)) {
-      if (0 ==strcmp(buf, "true") || 0==strcmp(buf, "1")){
+      if (0 == strcmp(buf, "true") || 0 == strcmp(buf, "1")) {
         dst = true;
         return true;
       }
-      if (0 ==strcmp(buf, "false") || 0==strcmp(buf, "0")){
+      if (0 == strcmp(buf, "false") || 0 == strcmp(buf, "0")) {
         dst = false;
         return true;
       }
@@ -564,5 +631,7 @@ private:
   jsmntok_t m_tok_arr[JSON_MAX_TOKENS];  ///< fixed size token array, suitable for stack
 };
 
-using JsonNeat_cp = JsoNeat<char *>; ///<  working on non-const char JSON. this allows null terminating strings in place with \ref get_value_as_string
-using JsonNeat_ccp = JsoNeat<const char *>; ///< working on const char JSON.
+using JsonNeat_cp = JsoNeat<char *>;
+///<  working on non-const char JSON. this allows null terminating strings in place with \ref get_value_as_string
+using JsonNeat_ccp = JsoNeat<const char *>;
+///< working on const char JSON.
