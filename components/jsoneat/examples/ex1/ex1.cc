@@ -4,6 +4,13 @@
 #include <type_traits>
 
 
+
+///////////////////////////  Example for unnamed json object ///////////////////////////
+
+// data struct without a from_json() member. This will make it impossible to have
+// it in a JSON array and using it.takeObjectArray(), because that function needs to call
+// the from_json() member for each array element.
+// see examples below for how it should be done
 struct data {
   int a;
   bool b;
@@ -11,16 +18,15 @@ struct data {
   char s[32];
 };
 
-///////////////////////////  Example for unnamed json object ///////////////////////////
 
 static void example_unnamed_json_object();
-static bool parse_and_process_unnamed_json_object(char *json_src, data &data_dst);
-static bool parse_and_process_jsmn_for_unnamed_json_object(Jsmn_String::Iterator &it, data &data_dst);
+static bool from_json(char *json_src, data &data_dst);
+static bool from_json(Jsmn_String::Iterator &it, data &data_dst);
 
 static void example_unnamed_json_object() {
   char json_string[] = R"({"a":-1, "b":true, "c":3, "s":"hello unnamed"})";
   data json_data = { };
-  if (parse_and_process_unnamed_json_object(json_string, json_data) || true) {
+  if (from_json(json_string, json_data) || true) {
     printf("unamed json object: a=%d, b=%d, c=%d, s=%s\n", json_data.a, json_data.b, json_data.c, json_data.s);
   }
 }
@@ -31,12 +37,12 @@ static void example_unnamed_json_object() {
  * \param data_dst     the struct should have the same member names and types
  * \return success
  */
-static bool parse_and_process_unnamed_json_object(char *json_src, data &data_dst) {
+static bool from_json(char *json_src, data &data_dst) {
   auto jsmn = JsoNeat<char*>(json_src, 128);
   if (!jsmn)
     return false;
   auto it = jsmn.begin();
-  return parse_and_process_jsmn_for_unnamed_json_object(it, data_dst);
+  return from_json(it, data_dst);
 }
 
 /**
@@ -45,67 +51,11 @@ static bool parse_and_process_unnamed_json_object(char *json_src, data &data_dst
  * \param data_dst  data is written here. Members should have same name and types as in jsmn object
  * \return success
  */
-static bool parse_and_process_jsmn_for_unnamed_json_object(Jsmn_String::Iterator &it, data &data_dst) {
+static bool from_json(Jsmn_String::Iterator &it, data &data_dst) {
   int err;
   if (it->type == JSMN_OBJECT) {
     auto count = it->size;
     for (it += 1; count > 0 && it; --count) {
-      if (!(it.takeValue(data_dst.a, "a") //
-      || it.takeValue(data_dst.b, "b") //
-          || it.takeValue(data_dst.c, "c") //
-          || it.takeValue(data_dst.s, "s") //
-      )) {
-        ++err;
-        it.skip_key_and_value();
-      }
-    }
-  } else
-    return false;
-
-  return err == 0;
-
-}
-
-///////////////////////////  Example for named json object ///////////////////////////
-
-static void example_named_json_object();
-static bool parse_and_process_named_json_object(char *json_src, data &data_dst);
-static bool parse_and_process_jsmn_for_named_json_object(Jsmn_String::Iterator &it, data &data_dst);
-
-static void example_named_json_object() {
-  char json_string[] = R"({"data": {"a":-1, "b":true, "c":3, "s":"hello named"}})";
-  data json_data = { };
-  if (parse_and_process_named_json_object(json_string, json_data) || true) {
-    printf("named json object: a=%d, b=%d, c=%d, s=%s\n", json_data.a, json_data.b, json_data.c, json_data.s);
-  }
-}
-
-/**
- * \brief parses json string (json_src) and write data to an object (data_dst)
- * \param json_src     named object "{...}" instead of "name:{...}")
- * \param data_dst     the struct should have the same member names and types
- * \return success
- */
-static bool parse_and_process_named_json_object(char *json_src, data &data_dst) {
-  auto jsmn = JsoNeat<char*>(json_src, 128);
-  if (!jsmn)
-    return false;
-  auto it = jsmn.begin();
-  ++it; // skip mandatory root object
-  return parse_and_process_jsmn_for_named_json_object(it, data_dst);
-}
-
-/**
- * \brief  copy data from jsmn object to a C struct object
- * \param it
- * \param data_dst  data is written here. Members should have same name and types as in jsmn object
- * \return success
- */
-static bool parse_and_process_jsmn_for_named_json_object(Jsmn_String::Iterator &it, data &data_dst) {
-  int err;
-  if (it.keyIsEqual("data", JSMN_OBJECT)) {
-    auto count = it[1].size;
-    for (it += 2; count > 0 && it; --count) {
       if (!(it.takeValue(data_dst.a, "a") //
       || it.takeValue(data_dst.b, "b") //
           || it.takeValue(data_dst.c, "c") //
@@ -228,7 +178,6 @@ static void example_nested_data_class() {
 
 int main() {
   example_unnamed_json_object();
-  example_named_json_object();
   example_data_class();
   example_nested_data_class();
 
