@@ -3,75 +3,6 @@
 
 #include <type_traits>
 
-
-
-///////////////////////////  Example for unnamed json object ///////////////////////////
-
-// data struct without a from_json() member. This will make it impossible to have
-// it in a JSON array and using it.takeObjectArray(), because that function needs to call
-// the from_json() member for each array element.
-// see examples below for how it should be done
-struct data {
-  int a;
-  bool b;
-  unsigned c;
-  char s[32];
-};
-
-
-static void example_unnamed_json_object();
-static bool from_json(char *json_src, data &data_dst);
-static bool from_json(Jsmn_String::Iterator &it, data &data_dst);
-
-static void example_unnamed_json_object() {
-  char json_string[] = R"({"a":-1, "b":true, "c":3, "s":"hello unnamed"})";
-  data json_data = { };
-  if (from_json(json_string, json_data) || true) {
-    printf("unamed json object: a=%d, b=%d, c=%d, s=%s\n", json_data.a, json_data.b, json_data.c, json_data.s);
-  }
-}
-
-/**
- * \brief parses json string (json_src) and write data to an object (data_dst)
- * \param json_src     unnamed object "{...}" instead of "name:{...}")
- * \param data_dst     the struct should have the same member names and types
- * \return success
- */
-static bool from_json(char *json_src, data &data_dst) {
-  auto jsmn = JsoNeat<char*>(json_src, 128);
-  if (!jsmn)
-    return false;
-  auto it = jsmn.begin();
-  return from_json(it, data_dst);
-}
-
-/**
- * \brief  copy data from jsmn object to a C struct object
- * \param it
- * \param data_dst  data is written here. Members should have same name and types as in jsmn object
- * \return success
- */
-static bool from_json(Jsmn_String::Iterator &it, data &data_dst) {
-  int err;
-  if (it->type == JSMN_OBJECT) {
-    auto count = it->size;
-    for (it += 1; count > 0 && it; --count) {
-      if (!(it.takeValue(data_dst.a, "a") //
-      || it.takeValue(data_dst.b, "b") //
-          || it.takeValue(data_dst.c, "c") //
-          || it.takeValue(data_dst.s, "s") //
-      )) {
-        ++err;
-        it.skip_key_and_value();
-      }
-    }
-  } else
-    return false;
-
-  return err == 0;
-
-}
-
 //////////////////// Example: data class object ////////////////////////////////////////
 
 class data_class {
@@ -116,7 +47,7 @@ static void example_data_class() {
   // Object with a from_json() member template function
   data_class json_data = { };
 
-  if (from_json(json_data, json_string)) {
+  if (jsoneat::from_json_member(json_data, json_string)) {
     printf("data_class object: a=%d, b=%d, c=%d, s=%s, ia=[%d, %d, %d, %d]\n", json_data.a, json_data.b, json_data.c, json_data.s,
         json_data.ia[0], json_data.ia[1],json_data.ia[2],json_data.ia[3]);
   }
@@ -165,7 +96,7 @@ static void example_nested_data_class() {
 
   nested_data_class json_data = { };
 
-  if (from_json<128>(json_data, json_string)) {
+  if (jsoneat::from_json_member<128>(json_data, json_string)) {
     printf("nested_data_class object:da.a=%d, da.b=%d, da.c=%d, da.s=%s\n", json_data.da.a, json_data.da.b, json_data.da.c, json_data.da.s);
     printf("nested_data_class object:db.a=%d, db.b=%d, db.c=%d, db.s=%s\n", json_data.db.a, json_data.db.b, json_data.db.c, json_data.db.s);
     printf("nested_data_class object:darr[0].a=%d, darr[0].b=%d, darr[0].c=%d, darr[0].s=%s\n", json_data.darr[0].a, json_data.darr[0].b, json_data.darr[0].c, json_data.darr[0].s);
@@ -175,6 +106,85 @@ static void example_nested_data_class() {
     printf("nested_data_class object: a=%d, b=%d, c=%d, s=%s\n", json_data.a, json_data.b, json_data.c, json_data.s);
   }
 }
+
+///////////////////////////  Example for unnamed json object ///////////////////////////
+
+// This example shows how to have the from_json() function outside the data struct or class.
+// this does not work together with things like it.takeObjectArray()
+
+struct data {
+  int a;
+  bool b;
+  unsigned c;
+  char s[32];
+};
+
+
+/**
+ * \brief  copy data from jsmn object to a C struct object
+ * \param it
+ * \param data_dst  data is written here. Members should have same name and types as in jsmn object
+ * \return success
+ */
+static bool from_json(jsoneat::Jsmn_String::Iterator &it, data &data_dst) {
+  int err;
+  if (it->type == JSMN_OBJECT) {
+    auto count = it->size;
+    for (it += 1; count > 0 && it; --count) {
+      if (!(it.takeValue(data_dst.a, "a") //
+      || it.takeValue(data_dst.b, "b") //
+          || it.takeValue(data_dst.c, "c") //
+          || it.takeValue(data_dst.s, "s") //
+      )) {
+        ++err;
+        it.skip_key_and_value();
+      }
+    }
+  } else
+    return false;
+
+  return err == 0;
+
+}
+
+/**
+ * \brief parses json string (json_src) and write data to an object (data_dst)
+ * \param json_src     unnamed object "{...}" instead of "name:{...}")
+ * \param data_dst     the struct should have the same member names and types
+ * \return success
+ */
+static bool from_json_friend(data &data_dst, char *json_src) {
+
+  #if 0
+ // allocate JSMN token array with 128 elements on heap
+  auto jsmn = jsoneat::JsoNeat<char*>(json_src, 128);
+ #else
+ // allocate JSMN token array with 32 elements on stack
+  auto jsmn = jsoneat::JsoNeat_fs<32, char*>(json_src);
+ #endif 
+
+  if (!jsmn)
+    return false; // token-array was too small, or JSON was invalid, or JSON not matching the object
+
+  auto it = jsmn.begin(); // get an iterator pointing to first token
+
+  // call our from_json() function.
+  // if that function was instead a member function of the data object
+  // we would not need this function here, but could instead call
+  // the template function jsoneat::from_json(T &obj, const char *json)
+  return from_json(it, data_dst);
+}
+
+
+static void example_unnamed_json_object() {
+  char json_string[] = R"({"a":-1, "b":true, "c":3, "s":"hello unnamed"})";
+  data json_data = { };
+
+  if (from_json_friend(json_data, json_string)) {
+    printf("unamed json object: a=%d, b=%d, c=%d, s=%s\n", json_data.a, json_data.b, json_data.c, json_data.s);
+  }
+}
+
 
 int main() {
   example_unnamed_json_object();

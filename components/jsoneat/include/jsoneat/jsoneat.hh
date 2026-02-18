@@ -16,6 +16,7 @@
 #include <cassert>
 #include <string>
 
+namespace jsoneat {
 /**
  * \brief  Parse JSON into tokens and iterate over it. Will handle all allocations.
  *
@@ -645,9 +646,8 @@ using JsonNeat_ccp = JsoNeat<const char *>;
 ///< working on const char JSON.
 
 
-
   /**
-   * \brief       template function to de-serialize from a JSON string
+   * \brief       convenient function template to de-serialize from a JSON string (FIXME: should not be in this header)
    * \tparam S    Type of JSON string like char *, const char *, std::string, ...
    * \tparam T    Type of object. The object has to have a from_json(jsmn_iter) member function template
    * \tparam MaxTokens fixed size of JSMN token array (allocated on stack)
@@ -655,7 +655,7 @@ using JsonNeat_ccp = JsoNeat<const char *>;
    * \return      success
    */
   template< int MaxTokens = 32, typename T, typename S>
-  bool from_json(T &obj, S json) {
+  bool from_json_member(T &obj, S json) {
     // tokenize JSON string using JSMN
     auto jsmn = JsoNeat_fs<MaxTokens, S>(json);
     if (!jsmn)
@@ -663,5 +663,8 @@ using JsonNeat_ccp = JsoNeat<const char *>;
 
     // pass the rest of the work to an overloaded from_json() member
     auto it = jsmn.begin();
-    return obj.from_json(it);
+
+       return obj.from_json(it);
   }
+
+}
