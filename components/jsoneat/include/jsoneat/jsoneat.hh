@@ -16,9 +16,6 @@
 #include <cassert>
 #include <string>
 
-//template <class T> // concept
-//concept is_class = std::is_class<T>::value;
-
 /**
  * \brief  Parse JSON into tokens and iterate over it. Will handle all allocations.
  *
@@ -65,7 +62,8 @@ public:
    *        references, which then can also be used to call member functions of JsoNeat object.
    *
    */
-  struct Iterator {
+  class Iterator {
+  public:
     using iterator_category = std::forward_iterator_tag;
     using difference_type = std::ptrdiff_t;
     using value_type = jsmntok_t;
@@ -645,3 +643,25 @@ using JsonNeat_cp = JsoNeat<char *>;
 ///<  working on non-const char JSON. this allows null terminating strings in place with \ref get_value_as_string
 using JsonNeat_ccp = JsoNeat<const char *>;
 ///< working on const char JSON.
+
+
+
+  /**
+   * \brief       template function to de-serialize from a JSON string
+   * \tparam S    Type of JSON string like char *, const char *, std::string, ...
+   * \tparam T    Type of object. The object has to have a from_json(jsmn_iter) member function template
+   * \tparam MaxTokens fixed size of JSMN token array (allocated on stack)
+   * \param json  JSON string
+   * \return      success
+   */
+  template< int MaxTokens = 32, typename T, typename S>
+  bool from_json(T &obj, S json) {
+    // tokenize JSON string using JSMN
+    auto jsmn = JsoNeat_fs<MaxTokens, S>(json);
+    if (!jsmn)
+      return false;
+
+    // pass the rest of the work to an overloaded from_json() member
+    auto it = jsmn.begin();
+    return obj.from_json(it);
+  }

@@ -1,6 +1,9 @@
 #include "jsmn/jsmn.h"
 #include "jsmn/jsmn_iterate.hh"
 
+#include <type_traits>
+
+
 struct data {
   int a;
   bool b;
@@ -122,8 +125,6 @@ static bool parse_and_process_jsmn_for_named_json_object(Jsmn_String::Iterator &
 //////////////////// Example: data class object ////////////////////////////////////////
 
 class data_class {
-  using self_type = data_class;
-
 public:
   int a;
   bool b;
@@ -133,23 +134,6 @@ public:
 
 public:
 
-  /**
-   * \brief       Public member template to de-serialize from a JSON string
-   * \tparam T    Type of JSON string like char *, const char *, std::string, ...
-   * \param json  JSON string
-   * \return      success
-   */
-  template<typename T, typename std::enable_if<!std::is_class<T> { }, bool>::type = true>
-  bool from_json(T json) {
-    // tokenize JSON string using JSMN
-    auto jsmn = Jsmn<32, T>(json);
-    if (!jsmn)
-      return false;
-
-    // pass the rest of the work to an overloaded from_json() member
-    auto it = jsmn.begin();
-    return from_json(it);
-  }
 
   /**
    * \brief        Public member template overload to de-serialize from JSMN tokens
@@ -157,7 +141,7 @@ public:
    * \param it     Iterator of a JSMN_OBJECT token in a token array
    * \return       success
    */
-  template<typename jsmn_iterator = Jsmn_String::Iterator, typename std::enable_if<std::is_class<jsmn_iterator> { }, bool>::type = true>
+  template<typename jsmn_iterator>
   bool from_json(jsmn_iterator &it) {
     assert(it->type == JSMN_OBJECT);
 
@@ -168,7 +152,6 @@ public:
           || it.takeValue(c, "c") //
           || it.takeValue(s, "s") //
           || it.takeValueArray(ia, "ia") //
-          // || it.skip_key_and_value() // skip unknown key/value pairs here or fail
       ))
         return false; // fail for unknown keys
     }
@@ -183,7 +166,7 @@ static void example_data_class() {
   // Object with a from_json() member template function
   data_class json_data = { };
 
-  if (json_data.from_json(json_string)) {
+  if (from_json(json_data, json_string)) {
     printf("data_class object: a=%d, b=%d, c=%d, s=%s, ia=[%d, %d, %d, %d]\n", json_data.a, json_data.b, json_data.c, json_data.s,
         json_data.ia[0], json_data.ia[1],json_data.ia[2],json_data.ia[3]);
   }
@@ -202,19 +185,10 @@ public:
   bool b;
   unsigned c;
   char s[32];
+
 public:
-  template<typename T, typename std::enable_if<!std::is_class<T> { }, bool>::type = true>
-  bool from_json(T json) {
-    auto jsmn = Jsmn<128, T>(json);
 
-    if (!jsmn)
-      return false;
-
-    auto it = jsmn.begin();
-    return from_json(it);
-  }
-
-  template<typename jsmn_iterator = Jsmn_String::Iterator, typename std::enable_if<std::is_class<jsmn_iterator> { }, bool>::type = true>
+  template<typename jsmn_iterator>
   bool from_json(jsmn_iterator &it) {
     assert(it->type == JSMN_OBJECT);
 
@@ -227,7 +201,6 @@ public:
           || it.takeObject(da, "da") //
           || it.takeObject(db, "db") //
           || it.takeObjectArray(darr, "darr") //
-          // || it.skip_key_and_value() // skip unknown key/value pairs here or fail
       ))
         return false; // fail for unknown keys
     }
@@ -242,7 +215,7 @@ static void example_nested_data_class() {
 
   nested_data_class json_data = { };
 
-  if (json_data.from_json(json_string) || true) {
+  if (from_json<128>(json_data, json_string)) {
     printf("nested_data_class object:da.a=%d, da.b=%d, da.c=%d, da.s=%s\n", json_data.da.a, json_data.da.b, json_data.da.c, json_data.da.s);
     printf("nested_data_class object:db.a=%d, db.b=%d, db.c=%d, db.s=%s\n", json_data.db.a, json_data.db.b, json_data.db.c, json_data.db.s);
     printf("nested_data_class object:darr[0].a=%d, darr[0].b=%d, darr[0].c=%d, darr[0].s=%s\n", json_data.darr[0].a, json_data.darr[0].b, json_data.darr[0].c, json_data.darr[0].s);
