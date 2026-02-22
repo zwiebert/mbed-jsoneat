@@ -5,6 +5,49 @@
 
 //////////////////// Example: data class object ////////////////////////////////////////
 
+// macro to get a pair of member name and its stringization for use as json-key
+#define NSP(x) x, #x
+#define JSN_TAKE(it, x) jsoneat::take(it, NSP(x))
+#define TAKE_VALUE(x) takeValue(NSP(x))
+#define TAKE_VALUE_ARRAY(x) takeValueArray(NSP(x))
+
+template<typename D>
+struct Nsp {
+  Nsp(D &dst, const char *json_key): key(json_key), destination(dst) {
+  }
+  const char *key;
+  D &destination;
+};
+
+#define XNSP(x) Nsp(x, #x)
+template<class ITER>
+bool take_one_of(ITER &it)
+{
+  return false;
+}
+
+template<class ITER, typename T, typename... Args>
+bool take_one_of(ITER &it, T pair, Args... args)
+{
+    if (jsoneat::take(it, pair.destination, pair.key))
+      return true;
+    return take_one_of(it, args...);
+}
+  
+template<class ITER, typename T, typename... Args>
+bool take_all_from_object(ITER &it, T pair , Args... args)
+{
+    assert(it->type == JSMN_OBJECT);
+
+    auto count = it->size;
+    for (++it; count > 0 && it; --count) {
+      if (!take_one_of(it, pair, args...))
+        return false; // fail for unknown keys
+    }
+    return true;
+}
+  
+
 class data_class {
 public:
   int a;
@@ -24,19 +67,7 @@ public:
    */
   template<typename jsmn_iterator>
   bool from_json(jsmn_iterator &it) {
-    assert(it->type == JSMN_OBJECT);
-
-    auto count = it->size;
-    for (++it; count > 0 && it; --count) {
-      if (!(it.takeValue(a, "a") //
-      || it.takeValue(b, "b") //
-          || it.takeValue(c, "c") //
-          || it.takeValue(s, "s") //
-          || it.takeValueArray(ia, "ia") //
-      ))
-        return false; // fail for unknown keys
-    }
-    return true;
+      return take_all_from_object(it, XNSP(a), XNSP(b), XNSP(c), XNSP(s), XNSP(ia));
   }
 };
 
@@ -71,22 +102,7 @@ public:
 
   template<typename jsmn_iterator>
   bool from_json(jsmn_iterator &it) {
-    assert(it->type == JSMN_OBJECT);
-
-    auto count = it->size;
-    for (++it; count > 0 && it; --count) {
-      if (!(it.takeValue(a, "a") //
-      || it.takeValue(b, "b") //
-          || it.takeValue(c, "c") //
-          || it.takeValue(s, "s") //
-          || it.takeObject(da, "da") //
-          || it.takeObject(db, "db") //
-          || it.takeObjectArray(darr, "darr") //
-      ))
-        return false; // fail for unknown keys
-    }
-    return true;
-
+    return take_all_from_object(it, XNSP(a), XNSP(b), XNSP(c), XNSP(s) , XNSP(da) , XNSP(db), XNSP(darr));
   }
 };
 
@@ -126,25 +142,8 @@ struct data {
  * \param data_dst  data is written here. Members should have same name and types as in jsmn object
  * \return success
  */
-static bool from_json(jsoneat::Jsmn_String::Iterator &it, data &data_dst) {
-  int err;
-  if (it->type == JSMN_OBJECT) {
-    auto count = it->size;
-    for (it += 1; count > 0 && it; --count) {
-      if (!(it.takeValue(data_dst.a, "a") //
-      || it.takeValue(data_dst.b, "b") //
-          || it.takeValue(data_dst.c, "c") //
-          || it.takeValue(data_dst.s, "s") //
-      )) {
-        ++err;
-        it.skip_key_and_value();
-      }
-    }
-  } else
-    return false;
-
-  return err == 0;
-
+static bool from_json(jsoneat::Jsmn_String::Iterator &it, data &dst) {
+      return take_all_from_object(it, Nsp(dst.a, "a"), Nsp(dst.b, "b"), Nsp(dst.c, "c"), Nsp(dst.s, "s"));
 }
 
 /**

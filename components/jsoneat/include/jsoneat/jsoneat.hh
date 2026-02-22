@@ -667,4 +667,33 @@ using JsonNeat_ccp = JsoNeat<const char *>;
        return obj.from_json(it);
   }
 
+  template<class ITER, size_t SIZE>
+  bool take(ITER &it, char (&dst)[SIZE], const char *key) {
+     return it.takeValue(dst, key);
+  }
+
+  template<class ITER, typename INT,
+           typename std::enable_if<std::is_integral<std::decay_t<INT>>::value>::type* = nullptr>
+  bool take(ITER &it, INT &dst, const char *key) {
+     return it.takeValue(dst, key);
+  }
+
+  template<class ITER, class C,
+           typename std::enable_if<std::is_class<std::decay_t<C>>::value>::type* = nullptr>
+  bool take(ITER &it, C &dst, const char *key) {
+     return it.takeObject(dst, key);
+  }
+
+  template<class ITER, typename INT, size_t SIZE,
+           typename std::enable_if<std::is_integral<std::decay_t<INT>>::value>::type* = nullptr>
+  bool take(ITER &it, INT (&dst)[SIZE], const char *key) {
+     return it.takeValueArray(dst, key);
+  }
+
+  template<class ITER, class C, size_t SIZE,
+           typename std::enable_if<std::is_class<std::decay_t<C>>::value>::type* = nullptr>
+  bool take(ITER &it, C (&dst)[SIZE], const char *key) {
+     return it.takeObjectArray(dst, key);
+  }
+
 }
