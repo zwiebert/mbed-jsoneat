@@ -671,41 +671,41 @@ bool from_json_member(T &obj, S json) {
  * \tparam D     type of data value or object
  */
 template<typename D>
-struct Nsp {
+struct KvPair {
   /**
    * \brief          construct object according of arguments.
    * \param value    reference to value variable
    * \param json_key pointer to json key as cstring
    */
-  Nsp(D &value, const char *json_key) :
+  KvPair(const char *json_key, D &value) :
       key(json_key), val(value) {
   }
 
-  D &val;
   const char *key;
+  D &val;
 };
 
-  // private macros for creating  argument list of reference/key-string pairs
+// private macros for creating  argument list of reference/key-string pairs
 #define _JSONEAT_COUNT_N(_1, _2, _3, _4, _5, _6, _7,_8, _9, _10, N, ...)    N
 #define _JSONEAT_COUNT(...)   _JSONEAT_COUNT_N( __VA_ARGS__, 10, 9, 8, 7, 6, 5 ,4, 3, 2, 1)
-#define _JSONEAT_BUILD_CHAIN_1(_1)       _JSONEAT_XNSPs_ACT(_1)
-#define _JSONEAT_BUILD_CHAIN_2(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_1(__VA_ARGS__)
-#define _JSONEAT_BUILD_CHAIN_3(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_2(__VA_ARGS__)
-#define _JSONEAT_BUILD_CHAIN_4(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_3(__VA_ARGS__)
-#define _JSONEAT_BUILD_CHAIN_5(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_4(__VA_ARGS__)
-#define _JSONEAT_BUILD_CHAIN_6(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_5(__VA_ARGS__)
-#define _JSONEAT_BUILD_CHAIN_7(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_6(__VA_ARGS__)
-#define _JSONEAT_BUILD_CHAIN_8(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_7(__VA_ARGS__)
-#define _JSONEAT_BUILD_CHAIN_9(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_8(__VA_ARGS__)
-#define _JSONEAT_BUILD_CHAIN_10(_1,...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_9(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_1(_1)       _JSONEAT_KvPairs_ACT(_1)
+#define _JSONEAT_BUILD_CHAIN_2(_1, ...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_1(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_3(_1, ...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_2(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_4(_1, ...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_3(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_5(_1, ...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_4(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_6(_1, ...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_5(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_7(_1, ...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_6(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_8(_1, ...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_7(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_9(_1, ...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_8(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_10(_1,...)  _JSONEAT_KvPairs_ACT(_1) , _JSONEAT_BUILD_CHAIN_9(__VA_ARGS__)
 #define _JSONEAT_BUILD_CHAIN_INC( CT, ...)   _JSONEAT_BUILD_CHAIN_ ## CT (__VA_ARGS__)
 #define _JSONEAT_BUILD_CHAIN( CT, ...)       _JSONEAT_BUILD_CHAIN_INC(CT, __VA_ARGS__)
-#define _JSONEAT_XNSPs_ACT(x)               jsoneat::Nsp(x, #x)
+#define _JSONEAT_KvPairs_ACT(x)               jsoneat::KvPair(#x, x)
 
 /**
- * \brief  Create argument list of jsoneat::Nsp-pairs, each containg a data-member reference and the corrosponding JSON key with the same name as the data-member
+ * \brief  Create argument list of jsoneat::KvPair-pairs, each containg a data-member reference and the corrosponding JSON key with the same name as the data-member
  * \args   list of all data-members to be de-serialized.
  */
-#define JSONEAT_XNSPs(...)            _JSONEAT_BUILD_CHAIN( _JSONEAT_COUNT(__VA_ARGS__), __VA_ARGS__)
+#define JSONEAT_KvPairs(...)            _JSONEAT_BUILD_CHAIN( _JSONEAT_COUNT(__VA_ARGS__), __VA_ARGS__)
 
 }

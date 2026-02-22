@@ -1,8 +1,12 @@
+/**
+ * \brief de-serialize objects from JSON using JSMN library
+ */
+
+#pragma once
+
 #include "jsoneat.hh"
 
 namespace jsoneat::from_json::jsmn {
-
-
 
 /**
  * \brief         overloaded function template for de-serializing from json-string into char-array
@@ -105,9 +109,6 @@ bool take(ITER &it, C (&dst)[SIZE], const char *key) {
   return it.takeObjectArray(dst, key);
 }
 
-
-
-
 /**
  * \brief          function template used as terminator in variadic template
  * \tparam ITER    type of iterator class embedded in JsoNeat
@@ -147,7 +148,7 @@ bool take_one_of(ITER &it, T pair, Args ... args) {
  * \return        true if all key in JSMN object matched a data-member-reference in the pair objects
  */
 template<class ITER, typename T, typename ... Args>
-bool take_all_from_object(ITER &it, T pair, Args ... args) {
+bool deserialize_object(ITER &it, T pair, Args ... args) {
   assert(it->type == JSMN_OBJECT);
 
   auto count = it->size;
@@ -157,9 +158,5 @@ bool take_all_from_object(ITER &it, T pair, Args ... args) {
   }
   return true;
 }
-
-
-
-
 
 }
