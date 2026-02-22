@@ -1,13 +1,7 @@
 #include "jsmn/jsmn.h"
 #include "jsmn/jsmn_iterate.hh"
-
+#include "jsoneat/from_json_jsmn.hh"
 #include <type_traits>
-
-
-// Source - https://stackoverflow.com/q/15847837
-// Posted by Loki Astari, modified by community. See post 'Timeline' for change history
-// Retrieved 2026-02-22, License - CC BY-SA 3.0
-
 
 
 
@@ -33,7 +27,7 @@ public:
    */
   template<typename jsmn_iterator>
   bool from_json(jsmn_iterator &it) {
-    return jsoneat::take_all_from_object(it, JSONEAT_XNSPs(a, b, c, f, s, ia));
+    return jsoneat::from_json::jsmn::take_all_from_object(it, JSONEAT_XNSPs(a, b, c, f, s, ia));
   }
 };
 
@@ -72,7 +66,7 @@ public:
 
   template<typename jsmn_iterator>
   bool from_json(jsmn_iterator &it) {
-    return jsoneat::take_all_from_object(it, JSONEAT_XNSPs(a, b, c, s, da, db, darr));
+    return jsoneat::from_json::jsmn::take_all_from_object(it, JSONEAT_XNSPs(a, b, c, s, da, db, darr));
   }
 };
 
@@ -113,7 +107,7 @@ struct data {
  * \return success
  */
 static bool from_json(jsoneat::Jsmn_String::Iterator &it, data &dst) {
-  return jsoneat::take_all_from_object(it, jsoneat::Nsp(dst.a, "a"), jsoneat::Nsp(dst.b, "b"),
+  return jsoneat::from_json::jsmn::take_all_from_object(it, jsoneat::Nsp(dst.a, "a"), jsoneat::Nsp(dst.b, "b"),
                               jsoneat::Nsp(dst.c, "c"), jsoneat::Nsp(dst.s, "s"));
 }
 
