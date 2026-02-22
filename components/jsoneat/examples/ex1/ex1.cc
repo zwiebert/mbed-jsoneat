@@ -3,83 +3,53 @@
 
 #include <type_traits>
 
+
+// Source - https://stackoverflow.com/q/15847837
+// Posted by Loki Astari, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-02-22, License - CC BY-SA 3.0
+
+
+
+
 //////////////////// Example: data class object ////////////////////////////////////////
-
-// macro to get a pair of member name and its stringization for use as json-key
-#define NSP(x) x, #x
-#define JSN_TAKE(it, x) jsoneat::take(it, NSP(x))
-#define TAKE_VALUE(x) takeValue(NSP(x))
-#define TAKE_VALUE_ARRAY(x) takeValueArray(NSP(x))
-
-template<typename D>
-struct Nsp {
-  Nsp(D &dst, const char *json_key): key(json_key), destination(dst) {
-  }
-  const char *key;
-  D &destination;
-};
-
-#define XNSP(x) Nsp(x, #x)
-template<class ITER>
-bool take_one_of(ITER &it)
-{
-  return false;
-}
-
-template<class ITER, typename T, typename... Args>
-bool take_one_of(ITER &it, T pair, Args... args)
-{
-    if (jsoneat::take(it, pair.destination, pair.key))
-      return true;
-    return take_one_of(it, args...);
-}
-  
-template<class ITER, typename T, typename... Args>
-bool take_all_from_object(ITER &it, T pair , Args... args)
-{
-    assert(it->type == JSMN_OBJECT);
-
-    auto count = it->size;
-    for (++it; count > 0 && it; --count) {
-      if (!take_one_of(it, pair, args...))
-        return false; // fail for unknown keys
-    }
-    return true;
-}
-  
 
 class data_class {
 public:
+  // some data members
   int a;
   bool b;
   unsigned c;
+  float f;
   char s[32];
   int ia[4];
 
+
 public:
-
-
   /**
-   * \brief        Public member template overload to de-serialize from JSMN tokens
+   * \brief        Public member template overload to de-serialize object from JSMN tokens
    * \tparam jsmn_iterator  Type of iterator (depending on the type of token array/JSON string type)
-   * \param it     Iterator of a JSMN_OBJECT token in a token array
+   * \param it     Iterator of a JSMN_OBJECT token in a JSMN token array
    * \return       success
    */
   template<typename jsmn_iterator>
   bool from_json(jsmn_iterator &it) {
-      return take_all_from_object(it, XNSP(a), XNSP(b), XNSP(c), XNSP(s), XNSP(ia));
+    return jsoneat::take_all_from_object(it, JSONEAT_XNSPs(a, b, c, f, s, ia));
   }
 };
 
+
+
 static void example_data_class() {
   // serialized object data in JSON format
-  char json_string[] = R"({"a":-1, "b":true, "c":3, "s":"hello dc root", "ia":[1, 2, 3, 4]})";
+  char json_string[] = R"({"a":-1, "b":true, "c":3, "f":1.234, "s":"hello dc root", "ia":[1, 2, 3, 4]})";
 
   // Object with a from_json() member template function
   data_class json_data = { };
 
   if (jsoneat::from_json_member(json_data, json_string)) {
-    printf("data_class object: a=%d, b=%d, c=%d, s=%s, ia=[%d, %d, %d, %d]\n", json_data.a, json_data.b, json_data.c, json_data.s,
+    printf("data_class object: a=%d, b=%d, c=%d, f=%f,  s=%s, ia=[%d, %d, %d, %d]\n",
+           json_data.a, json_data.b, json_data.c, json_data.f,
+           json_data.s,
         json_data.ia[0], json_data.ia[1],json_data.ia[2],json_data.ia[3]);
   }
 }
@@ -102,7 +72,7 @@ public:
 
   template<typename jsmn_iterator>
   bool from_json(jsmn_iterator &it) {
-    return take_all_from_object(it, XNSP(a), XNSP(b), XNSP(c), XNSP(s) , XNSP(da) , XNSP(db), XNSP(darr));
+    return jsoneat::take_all_from_object(it, JSONEAT_XNSPs(a, b, c, s, da, db, darr));
   }
 };
 
@@ -143,7 +113,8 @@ struct data {
  * \return success
  */
 static bool from_json(jsoneat::Jsmn_String::Iterator &it, data &dst) {
-      return take_all_from_object(it, Nsp(dst.a, "a"), Nsp(dst.b, "b"), Nsp(dst.c, "c"), Nsp(dst.s, "s"));
+  return jsoneat::take_all_from_object(it, jsoneat::Nsp(dst.a, "a"), jsoneat::Nsp(dst.b, "b"),
+                              jsoneat::Nsp(dst.c, "c"), jsoneat::Nsp(dst.s, "s"));
 }
 
 /**
@@ -160,7 +131,7 @@ static bool from_json_friend(data &data_dst, char *json_src) {
  #else
  // allocate JSMN token array with 32 elements on stack
   auto jsmn = jsoneat::JsoNeat_fs<32, char*>(json_src);
- #endif 
+ #endif
 
   if (!jsmn)
     return false; // token-array was too small, or JSON was invalid, or JSON not matching the object

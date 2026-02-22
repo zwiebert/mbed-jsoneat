@@ -18,27 +18,56 @@
    *  Crate and view source documentation `make doxy-dev-view`
 
 #### Usage
-   * View [Example code ex1](components/jsoneat/examples/ex1/ex1.cc) to use wrapper classes. 
+   * View [Example code ex1](components/jsoneat/examples/ex1/ex1.cc) for code which compiles and runs. 
    * `#include` [jsoneat/jsoneat.hh](components/jsoneat/include/jsoneat/jsoneat.hh) to use wrapper classes. 
    * `#include jsmn/jsmn.h` to use underlying Jsmn submodule directly at some places. 
    
-Example
+##### To de-serialize an object, it would like this:
 
 ```cpp
+struct MyStruct {
+  int id;
+  char name[32];
 
-int f(const char *json) {
+  template<typename jsmn_iterator>
+  bool from_json(jsmn_iterator &it) {
+    return jsoneat::take_all_from_object(it, JSONEAT_XNSPs(id, name));
+  }
+};
+
+class MyClass {
+  public:
+    int n;
+    int narr[4];
+    float f;
+    float farr[5];
+    bool b;
+    bool barr[b];
+    class MyStruct o;
+    class MyStruct oarr[6];
+    
+  public:
+  
+  template<typename jsmn_iterator>
+  bool from_json(jsmn_iterator &it) {
+    return jsoneat::take_all_from_object(it, JSONEAT_XNSPs(n, narr, f, farr, b, barr, o, oarr));
+  }
+   
+};
+
+bool deserialize_my_object_from_json_string(const char *json) {
 
 //MyClass should contain a from_json function (see example ex1)
 MyClass obj = {}; // create local object with default values inside
 
 
 
-  if (from_json(obj, json)) {
+  if (jsoneat::from_json_member(obj, json)) {
      // successful copied data from json into object
      // the JSMN token array contains 32 elements by default
      // ...and is placed on stack
 
-     g(obj) //  here we can use the object
+     g(obj) //  here we can use the restored object
 
     return true;
   }
@@ -48,19 +77,17 @@ MyClass obj = {}; // create local object with default values inside
   // for big classes with lots of data
   // Try 128 instead of the default 32 elements...  
 
-  if (from_json<128>(obj, json)) {
+  if (jsoneat::from_json_member<128>(obj, json)) {
      // successful copied data from json into object
      //  here we can use the object
 
-     g(obj) //  here we can use the object
+     g(obj) //  here we can use the restored object
 
     return true;
   }
   
   // its also possible to place the array in RAM allocated by "new".
   // the code can try to enlarge the array until it succeeds.
-
-  
 
 }
 

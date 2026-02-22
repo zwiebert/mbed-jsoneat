@@ -645,55 +645,218 @@ using JsonNeat_cp = JsoNeat<char *>;
 using JsonNeat_ccp = JsoNeat<const char *>;
 ///< working on const char JSON.
 
+/**
+ * \brief       convenient function template to de-serialize from a JSON string (FIXME: should not be in this header)
+ * \tparam S    Type of JSON string like char *, const char *, std::string, ...
+ * \tparam T    Type of object. The object has to have a from_json(jsmn_iter) member function template
+ * \tparam MaxTokens fixed size of JSMN token array (allocated on stack)
+ * \param json  JSON string
+ * \return      success
+ */
+template<int MaxTokens = 32, typename T, typename S>
+bool from_json_member(T &obj, S json) {
+  // tokenize JSON string using JSMN
+  auto jsmn = JsoNeat_fs<MaxTokens, S>(json);
+  if (!jsmn)
+    return false;
 
+  // pass the rest of the work to an overloaded from_json() member
+  auto it = jsmn.begin();
+
+  return obj.from_json(it);
+}
+
+/**
+ * \brief         overloaded function template for de-serializing from json-string into char-array
+ * \tparam ITER   JSMN iterator type
+ * \tparam SIZE   char array size
+ * \param it     JSMN iterator object reference
+ * \param dst    data-member reference
+ * \param key    json key to match against key name in iterator. or nullptr, for any key (?)
+ * \return       true if key has matched and
+ */
+template<class ITER, size_t SIZE>
+bool take(ITER &it, char (&dst)[SIZE], const char *key) {
+  return it.takeValue(dst, key);
+}
+
+/**
+ * \brief         overloaded function template for de-serializing integral types
+ * \tparam ITER   JSMN iterator type
+ * \tparam SIZE   char array size
+ * \param it     JSMN iterator object reference
+ * \param dst    data-member reference
+ * \param key    json key to match against key name in iterator. or nullptr, for any key (?)
+ * \return       true if key has matched and
+ */
+template<class ITER, typename INT, typename std::enable_if<std::is_integral<std::decay_t<INT>>::value>::type* = nullptr>
+bool take(ITER &it, INT &dst, const char *key) {
+  return it.takeValue(dst, key);
+}
+
+/**
+ * \brief         overloaded function template for de-serializing floating point types
+ * \tparam ITER   JSMN iterator type
+ * \tparam SIZE   char array size
+ * \param it     JSMN iterator object reference
+ * \param dst    data-member reference
+ * \param key    json key to match against key name in iterator. or nullptr, for any key (?)
+ * \return       true if key has matched and
+ */
+template<class ITER, typename INT, typename std::enable_if<std::is_floating_point<std::decay_t<INT>>::value>::type* = nullptr>
+bool take(ITER &it, INT &dst, const char *key) {
+  return it.takeValue(dst, key);
+}
+
+/**
+ * \brief         overloaded function template for de-serializing object types
+ * \tparam ITER   JSMN iterator type
+ * \tparam SIZE   char array size
+ * \param it     JSMN iterator object reference
+ * \param dst    data-member reference
+ * \param key    json key to match against key name in iterator. or nullptr, for any key (?)
+ * \return       true if key has matched and
+ */
+template<class ITER, class C, typename std::enable_if<std::is_class<std::decay_t<C>>::value>::type* = nullptr>
+bool take(ITER &it, C &dst, const char *key) {
+  return it.takeObject(dst, key);
+}
+
+/**
+ * \brief         overloaded function template for de-serializing an array integral type values
+ * \tparam ITER   JSMN iterator type
+ * \tparam INT    type of array members
+ * \tparam SIZE   array length
+ * \param it     JSMN iterator object reference
+ * \param dst    data-member reference
+ * \param key    json key to match against key name in iterator. or nullptr, for any key (?)
+ * \return       true if key has matched and
+ */
+template<class ITER, typename INT, size_t SIZE, typename std::enable_if<std::is_integral<std::decay_t<INT>>::value>::type* = nullptr>
+bool take(ITER &it, INT (&dst)[SIZE], const char *key) {
+  return it.takeValueArray(dst, key);
+}
+
+/**
+ * \brief         overloaded function template for de-serializing an array floating point type values
+ * \tparam ITER   JSMN iterator type
+ * \tparam INT    type of array members
+ * \tparam SIZE   array length
+ * \param it     JSMN iterator object reference
+ * \param dst    data-member reference
+ * \param key    json key to match against key name in iterator. or nullptr, for any key (?)
+ * \return       true if key has matched and
+ */
+template<class ITER, typename INT, size_t SIZE, typename std::enable_if<std::is_floating_point<std::decay_t<INT>>::value>::type* = nullptr>
+bool take(ITER &it, INT (&dst)[SIZE], const char *key) {
+  return it.takeValueArray(dst, key);
+}
+
+/**
+ * \brief         overloaded function template for de-serializing an array of struct type objects
+ * \tparam ITER   JSMN iterator type
+ * \tparam INT    type of array members
+ * \tparam SIZE   array length
+ * \param it     JSMN iterator object reference
+ * \param dst    data-member reference
+ * \param key    json key to match against key name in iterator. or nullptr, for any key (?)
+ * \return       true if key has matched and
+ */
+template<class ITER, class C, size_t SIZE, typename std::enable_if<std::is_class<std::decay_t<C>>::value>::type* = nullptr>
+bool take(ITER &it, C (&dst)[SIZE], const char *key) {
+  return it.takeObjectArray(dst, key);
+}
+
+/**
+ * \brief        pair of a reference and a json-key
+ * \tparam D     type of data value or object
+ */
+template<typename D>
+struct Nsp {
   /**
-   * \brief       convenient function template to de-serialize from a JSON string (FIXME: should not be in this header)
-   * \tparam S    Type of JSON string like char *, const char *, std::string, ...
-   * \tparam T    Type of object. The object has to have a from_json(jsmn_iter) member function template
-   * \tparam MaxTokens fixed size of JSMN token array (allocated on stack)
-   * \param json  JSON string
-   * \return      success
+   * \brief      construct object according of arguments.
+   * \param dst
+   * \param json_key
    */
-  template< int MaxTokens = 32, typename T, typename S>
-  bool from_json_member(T &obj, S json) {
-    // tokenize JSON string using JSMN
-    auto jsmn = JsoNeat_fs<MaxTokens, S>(json);
-    if (!jsmn)
-      return false;
-
-    // pass the rest of the work to an overloaded from_json() member
-    auto it = jsmn.begin();
-
-       return obj.from_json(it);
+  Nsp(D &dst, const char *json_key) :
+      key(json_key), destination(dst) {
   }
 
-  template<class ITER, size_t SIZE>
-  bool take(ITER &it, char (&dst)[SIZE], const char *key) {
-     return it.takeValue(dst, key);
-  }
+  D &destination;
+  const char *key;
+};
 
-  template<class ITER, typename INT,
-           typename std::enable_if<std::is_integral<std::decay_t<INT>>::value>::type* = nullptr>
-  bool take(ITER &it, INT &dst, const char *key) {
-     return it.takeValue(dst, key);
-  }
+// private macros for creating  argument list of reference/key-string pairs
+#define _JSONEAT_COUNT_N(_1, _2, _3, _4, _5, _6, _7,_8, _9, _10, N, ...)    N
+#define _JSONEAT_COUNT(...)   _JSONEAT_COUNT_N( __VA_ARGS__, 10, 9, 8, 7, 6, 5 ,4, 3, 2, 1)
+#define _JSONEAT_BUILD_CHAIN_1(_1)       _JSONEAT_XNSPs_ACT(_1)
+#define _JSONEAT_BUILD_CHAIN_2(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_1(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_3(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_2(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_4(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_3(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_5(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_4(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_6(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_5(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_7(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_6(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_8(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_7(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_9(_1, ...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_8(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_10(_1,...)  _JSONEAT_XNSPs_ACT(_1) , _JSONEAT_BUILD_CHAIN_9(__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN_INC( CT, ...)   _JSONEAT_BUILD_CHAIN_ ## CT (__VA_ARGS__)
+#define _JSONEAT_BUILD_CHAIN( CT, ...)       _JSONEAT_BUILD_CHAIN_INC(CT, __VA_ARGS__)
+#define _JSONEAT_XNSPs_ACT(x)               jsoneat::Nsp(x, #x)
 
-  template<class ITER, class C,
-           typename std::enable_if<std::is_class<std::decay_t<C>>::value>::type* = nullptr>
-  bool take(ITER &it, C &dst, const char *key) {
-     return it.takeObject(dst, key);
-  }
+/**
+ * \brief  Create argument list of jsoneat::Nsp-pairs, each containg a data-member reference and the corrosponding JSON key with the same name as the data-member
+ * \args   list of all data-members to be de-serialized.
+ */
+#define JSONEAT_XNSPs(...)            _JSONEAT_BUILD_CHAIN( _JSONEAT_COUNT(__VA_ARGS__), __VA_ARGS__)
 
-  template<class ITER, typename INT, size_t SIZE,
-           typename std::enable_if<std::is_integral<std::decay_t<INT>>::value>::type* = nullptr>
-  bool take(ITER &it, INT (&dst)[SIZE], const char *key) {
-     return it.takeValueArray(dst, key);
-  }
+/**
+ * \brief          function template used as terminator in variadic template
+ * \tparam ITER    type of iterator class embedded in JsoNeat
+ * \param it       unused
+ * \return         returns always false
+ */
+template<class ITER>
+bool take_one_of(ITER &it) {
+  return false;
+}
 
-  template<class ITER, class C, size_t SIZE,
-           typename std::enable_if<std::is_class<std::decay_t<C>>::value>::type* = nullptr>
-  bool take(ITER &it, C (&dst)[SIZE], const char *key) {
-     return it.takeObjectArray(dst, key);
+/**
+ * \brief         variadic function template for de-serializing data of current JSMN iterator into the matching pair from our args-list
+ * \tparam ITER   type of iterator class embedded in JsoNeat
+ * \tparam T      type of struct (pair) containing a reference to a data-member and the json-key name used for this member
+ * \tparam Args   more types of these pairs like T but, which are only different by the type of the data-member referenced
+ * \param it      iterator
+ * \param pair    the first data-member-reference / json-key pair object
+ * \param args    rest of the pair objects
+ * \return        true if all key in JSMN object matched a data-member-reference in the pair objects
+ */
+template<class ITER, typename T, typename ... Args>
+bool take_one_of(ITER &it, T pair, Args ... args) {
+  if (jsoneat::take(it, pair.destination, pair.key))
+    return true;
+  return take_one_of(it, args...);
+}
+
+/**
+ * \brief         variadic function template for de-serializing all members of an object in one call
+ * \tparam ITER   type of iterator class embedded in JsoNeat
+ * \tparam T      type of struct (pair) containing a reference to a data-member and the json-key name used for this member
+ * \tparam Args   more types of these pairs like T but, which are only different by the type of the data-member referenced
+ * \param it      iterator
+ * \param pair    the first data-member-reference / json-key pair object
+ * \param args    rest of the pair objects
+ * \return        true if all key in JSMN object matched a data-member-reference in the pair objects
+ */
+template<class ITER, typename T, typename ... Args>
+bool take_all_from_object(ITER &it, T pair, Args ... args) {
+  assert(it->type == JSMN_OBJECT);
+
+  auto count = it->size;
+  for (++it; count > 0 && it; --count) {
+    if (!take_one_of(it, pair, args...))
+      return false; // fail for unknown keys
   }
+  return true;
+}
 
 }
