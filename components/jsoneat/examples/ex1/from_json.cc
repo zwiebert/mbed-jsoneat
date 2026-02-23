@@ -1,3 +1,10 @@
+/**
+ * \brief Example programm. De-serialize objects
+ *
+ * For struct/class types he user should add from_json() member functions.
+ * The JSON string and the root object are then passed to a library function jsoneat::from_json_member
+ */
+
 #include "jsmn/jsmn.h"
 #include "jsmn/jsmn_iterate.hh"
 #include "jsoneat/from_json_jsmn.hh"

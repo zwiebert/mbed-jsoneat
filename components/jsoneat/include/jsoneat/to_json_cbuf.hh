@@ -50,18 +50,24 @@ int to_json_val(char *dst, size_t dst_size, const C &val) {
 
 }
 
-template<class T>
-int to_json_kvp(char *dst, size_t dst_size, const jsoneat::KvPair<T> kvp) {
-  auto res = snprintf(dst, dst_size, R"("%s":)", kvp.key);
-  if (res >= dst_size)
-    return res;
-  return res + to_json_val(dst + res, dst_size - res, kvp.val);
-}
+template<typename T, size_t SIZE>
+int to_json_val(char *dst, size_t dst_size, const T (&val)[SIZE]) {
+  int res = 0;
 
-template<size_t SIZE>
-int to_json_kvp(char *dst, size_t dst_size, const jsoneat::KvPair<char[SIZE]> kvp) {
-  return snprintf(dst, dst_size, //
-      R"("%s":"%s",)", kvp.key, kvp.val);
+  dst[res++] = '[';
+
+  for (int i = 0; i < SIZE; ++i) {
+    res += to_json_val(dst + res, dst_size - res, val[i]);
+    if (res >= dst_size)
+      return res;
+  }
+  if (dst[res - 1] == ',')
+    --res;
+
+  dst[res++] = ']';
+  dst[res++] = ',';
+
+  return res;
 }
 
 template<typename T, size_t SIZE>
@@ -83,6 +89,22 @@ int to_json_val(char *dst, size_t dst_size, const jsoneat::KvPair<T[SIZE]> kvp) 
 
   return res;
 }
+
+template<class T>
+int to_json_kvp(char *dst, size_t dst_size, const jsoneat::KvPair<T> kvp) {
+  auto res = snprintf(dst, dst_size, R"("%s":)", kvp.key);
+  if (res >= dst_size)
+    return res;
+  return res + to_json_val(dst + res, dst_size - res, kvp.val);
+}
+
+template<size_t SIZE>
+int to_json_kvp(char *dst, size_t dst_size, const jsoneat::KvPair<char[SIZE]> kvp) {
+  return snprintf(dst, dst_size, //
+      R"("%s":"%s",)", kvp.key, kvp.val);
+}
+
+
 
 int to_json_args(char *dst, size_t dst_size) {
   return 0;
