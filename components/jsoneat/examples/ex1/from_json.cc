@@ -30,7 +30,7 @@ public:
    * \return       success
    */
   template<typename jsmn_iterator>
-  bool from_json(jsmn_iterator &it) {
+  bool _from_json(jsmn_iterator &it) {
     return jsoneat::from_json::jsmn::deserialize_object(it, JSONEAT_KvPairs(a, b, c, f, s, ia));
   }
 };
@@ -65,7 +65,7 @@ public:
 public:
 
   template<typename jsmn_iterator>
-  bool from_json(jsmn_iterator &it) {
+  bool _from_json(jsmn_iterator &it) {
     return jsoneat::from_json::jsmn::deserialize_object(it, JSONEAT_KvPairs(a, b, c, s, da, db, darr));
   }
 };
@@ -109,7 +109,7 @@ struct data {
  * \param data_dst  data is written here. Members should have same name and types as in jsmn object
  * \return success
  */
-static bool from_json(jsoneat::Jsmn_String::Iterator &it, data &dst) {
+static bool _from_json(jsoneat::Jsmn_String::Iterator &it, data &dst) {
   return jsoneat::from_json::jsmn::deserialize_object(it, jsoneat::KvPair("a", dst.a), jsoneat::KvPair("b", dst.b), jsoneat::KvPair("c", dst.c),
       jsoneat::KvPair("s", dst.s));
 }
@@ -139,7 +139,7 @@ static bool from_json_friend(data &data_dst, char *json_src) {
   // if that function was instead a member function of the data object
   // we would not need this function here, but could instead call
   // the template function jsoneat::from_json(T &obj, const char *json)
-  return from_json(it, data_dst);
+  return _from_json(it, data_dst);
 }
 
 static void example_unnamed_json_object() {

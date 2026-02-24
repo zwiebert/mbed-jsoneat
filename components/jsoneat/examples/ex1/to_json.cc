@@ -16,7 +16,7 @@
 struct data_struct {
   int a = -42, b = 2, c = 3;
 
-  int to_json(char *dst, size_t dst_size) const {
+  int _to_json(char *dst, size_t dst_size) const {
     return jsoneat::to_json::cbuf::to_json_args(dst, dst_size, JSONEAT_KvPairs(a, b, c));
   }
 
@@ -34,6 +34,7 @@ public:
   bool ba[4] = { true, false, false, true };
   unsigned ua[4] = { 5, 6, 7, 8 };
   data_struct ds;
+  data_struct oa[4];
 
 private:
   // some members which have different names than appear in JSON
@@ -44,11 +45,11 @@ private:
   int nmb12 = 12;
 
 public:
-  int to_json(char *dst, size_t dst_size) const {
+  int _to_json(char *dst, size_t dst_size) const {
     return jsoneat::to_json::cbuf::to_json_args //this variadic template can take  any number of KvPair arguments
     (dst, dst_size, // the destination buffer for the created JSON cstring
         JSONEAT_KvPairs(a, b, c, f, s, ia, ba, ua, ds, nmb10), // create key/val pairs for up to 10 members (TODO: increase number)
-        JSONEAT_KvPairs(nmb11, nmb12), // ...the macro is limited to 10 arguments for now, but a second macro call works just fine
+     JSONEAT_KvPairs(nmb11, nmb12, oa), // ...the macro is limited to 10 arguments for now, but a second macro call works just fine
         jsoneat::KvPair("name", m_name), jsoneat::KvPair("id", m_id)); // here the JSON names differ from actual member-names, so we provide them both
   }
 };
@@ -56,13 +57,32 @@ public:
 static void example_data_object_to_json() {
   data_class data = { };
 
-  char buf[256] = { };
+  char buf[512] = { };
   char *dst = buf;
   size_t dst_size = sizeof buf - 1;
 
+  auto json_length = jsoneat::to_json::cbuf::to_json_val(dst, dst_size, data, false);
+  fprintf(stderr, "reported length of JSON string: %d, buffer size: %lu.\n", json_length, dst_size);
+
+  if (json_length >= dst_size) {
+    fprintf(stderr, "JSON string buffer too small: %lu. Needs at least %d bytes\n", dst_size, json_length);
+    return;
+  }
+
+  puts(buf);
+}
+
+
+static void test_example_data_object_to_json() {
+  data_class data = { };
+
+  char buf[256] = { };
+  char *dst = buf;
+  size_t dst_size = sizeof buf;
+  memset(dst, 42, dst_size);
   auto predicted_json_length = jsoneat::to_json::cbuf::to_json_val(dst, 0, data, false);
   fprintf(stderr, "reported length of JSON string: %d, buffer size: %lu.\n", predicted_json_length, dst_size);
-  assert(*dst == '\0');  // nothing should have been written to dst if called with dst_size=0.
+  assert(*dst == 42);  // nothing should have been written to dst if called with dst_size=0.
 
   auto json_length = jsoneat::to_json::cbuf::to_json_val(dst, dst_size, data, false);
   fprintf(stderr, "reported length of JSON string: %d, buffer size: %lu.\n", json_length, dst_size);
@@ -74,7 +94,7 @@ static void example_data_object_to_json() {
   }
 
 
-  fprintf(stderr, "strlen json with trailing comma: %lu\n", strlen(dst));
+  fprintf(stderr, "strlen json: %lu\n", strlen(dst));
   assert(strlen(dst) == json_length);
 
   puts(buf);
@@ -82,4 +102,5 @@ static void example_data_object_to_json() {
 
 int main() {
   example_data_object_to_json();
+  test_example_data_object_to_json();
 }

@@ -18,6 +18,14 @@ inline int to_json_val(char *dst, size_t dst_size, int val) {
   return snprintf(dst, dst_size, //
       R"(%d,)", val);
 }
+inline int to_json_val(char *dst, size_t dst_size, long val) {
+  return snprintf(dst, dst_size, //
+      R"(%ld,)", val);
+}
+inline int to_json_val(char *dst, size_t dst_size, long long val) {
+  return snprintf(dst, dst_size, //
+      R"(%lld,)", val);
+}
 inline int to_json_val(char *dst, size_t dst_size, unsigned val) {
   return snprintf(dst, dst_size, //
       R"(%u,)", val);
@@ -42,9 +50,9 @@ int to_json_val(char *dst, size_t dst_size, const C &val, bool append_comma = tr
   ++res;
 
   if (res < dst_size)
-    res += val.to_json(dst + res, dst_size - res);
+    res += val._to_json(dst + res, dst_size - res);
   else
-    res += val.to_json(dst, 0);
+    res += val._to_json(dst, 0);
 
   //if (dst[res - 1] == ',')
   --res;
@@ -58,6 +66,9 @@ int to_json_val(char *dst, size_t dst_size, const C &val, bool append_comma = tr
       dst[res] = ',';
     ++res;
   }
+
+  if (res < dst_size)
+    dst[res] = '\0';
 
   return res;
 
@@ -91,6 +102,9 @@ int to_json_val(char *dst, size_t dst_size, const T (&val)[SIZE], bool append_co
     ++res;
   }
 
+  if (res < dst_size)
+    dst[res] = '\0';
+
   return res;
 }
 
@@ -109,7 +123,7 @@ int to_json_kvp(char *dst, size_t dst_size, const jsoneat::KvPair<char[SIZE]> kv
       R"("%s":"%s",)", kvp.key, kvp.val);
 }
 
-int to_json_args(char *dst, size_t dst_size) {
+inline int to_json_args(char *dst, size_t dst_size) {
   return 0;
 }
 

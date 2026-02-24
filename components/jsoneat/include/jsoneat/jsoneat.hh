@@ -287,7 +287,7 @@ public:
       if (!keyIsEqual(key, JSMN_OBJECT))
         return false;
       skip_key();
-      return dst.from_json(*this);
+      return dst._from_json(*this);
     }
 
     /**
@@ -309,7 +309,7 @@ public:
       auto count = it->size; // get array size
       ++it; // skip array token
       for (int i = 0; i < count && i < N; ++i) {
-        if (!dst[i].from_json(it))
+        if (!dst[i]._from_json(it))
           return false;
       }
       return true;
@@ -663,7 +663,7 @@ bool from_json_member(T &obj, S json) {
   // pass the rest of the work to an overloaded from_json() member
   auto it = jsmn.begin();
 
-  return obj.from_json(it);
+  return obj._from_json(it);
 }
 
 /**
