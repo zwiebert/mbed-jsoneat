@@ -109,6 +109,11 @@ bool take(ITER &it, C (&dst)[SIZE], const char *key) {
   return it.takeObjectArray(dst, key);
 }
 
+template<class ITER, class C, size_t SIZE, typename std::enable_if<std::is_class<std::decay_t<C>>::value>::type* = nullptr>
+bool take(ITER &it, std::array<C, SIZE> &dst, const char *key) {
+  return it.takeObjectArray(dst, key);
+}
+
 /**
  * \brief          function template used as terminator in variadic template
  * \tparam ITER    type of iterator class embedded in JsoNeat

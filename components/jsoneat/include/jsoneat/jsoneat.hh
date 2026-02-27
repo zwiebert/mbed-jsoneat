@@ -298,7 +298,7 @@ public:
      * \param  dst   objects will be written to array dst
      * \return       success
      */
-    template<typename T, int N>
+    template<typename T, size_t N>
     bool takeObjectArray(T (&dst)[N], const char *key) {
       if (!keyIsEqual(key, JSMN_ARRAY))
         return false;
@@ -310,6 +310,32 @@ public:
       ++it; // skip array token
       for (int i = 0; i < count && i < N; ++i) {
         if (!dst[i]._from_json(it))
+          return false;
+      }
+      return true;
+    }
+
+    /**
+     * \brief        Get objects from array and advance iterator
+     * \tparam T     type of array members
+     * \tparam N     array_size
+     * \param  key   key to match or nullptr to match any key
+     * \param  dst   objects will be written to array dst
+     * \return       success
+     */
+    template<typename T, size_t N>
+    bool takeObjectArray(std::array<T, N> &dst, const char *key) {
+      if (!keyIsEqual(key, JSMN_ARRAY))
+        return false;
+      skip_key();
+
+      auto &it = *this;
+
+      auto count = it->size; // get array size
+      ++it; // skip array token
+      for (int i = 0; i < count && i < N; ++i) {
+        if (!dst[i]._from_json(it))
+
           return false;
       }
       return true;
