@@ -1,0 +1,7 @@
+<map id="jsoneat::JsoNeat::Iterator::skip_key_and_value" name="jsoneat::JsoNeat::Iterator::skip_key_and_value">
+<area shape="rect" id="Node000001" title="skip this key/value pair (in and object)" alt="" coords="237,29,421,69"/>
+<area shape="rect" id="Node000002" href="$classjsoneat_1_1JsoNeat_1_1Iterator.html#aa9257621fbf4c3f11f141dd4f10d29e6" title="skip this value (of an array)" alt="" coords="5,29,189,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,61,190,61,190,55,223,56"/>
+<area shape="poly" id="edge2_Node000002_Node000001" title=" " alt="" coords="203,38,237,38,237,43,203,43"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="137,18,123,11,97,8,75,10,62,15,57,21,59,28,54,30,51,20,58,10,74,5,97,3,124,6,139,13"/>
+</map>
