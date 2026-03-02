@@ -28,12 +28,16 @@ class JsoNeat {
 
 protected:
   JsoNeat(input_type json, jsmntok_t *tok, unsigned tok_max) :
-      m_json(json), m_tok_heap_alloc(nullptr), m_tok(tok), m_tok_max(tok_max), m_nmb_tok(do_parse(json)) {
+      m_json(json), m_tok_max(tok_max), m_tok_heap_alloc(nullptr), m_tok(tok), m_nmb_tok(do_parse(json)) {
   }
 public:
 
   JsoNeat(input_type json, unsigned tok_max) :
-      m_json(json), m_tok_heap_alloc(new jsmntok_t[tok_max]), m_tok(m_tok_heap_alloc), m_tok_max(tok_max), m_nmb_tok(do_parse(json)) {
+      m_json(json), m_tok_max(tok_max), m_tok_heap_alloc(new jsmntok_t[tok_max]), m_tok(m_tok_heap_alloc), m_nmb_tok(do_parse(json)) {
+  }
+
+  JsoNeat(input_type json) :
+      m_json(json), m_tok_max(get_nmb_of_tokens(json)), m_tok_heap_alloc(new jsmntok_t[m_tok_max]), m_tok(m_tok_heap_alloc), m_nmb_tok(do_parse(json)) {
   }
 
   ~JsoNeat() {
@@ -41,7 +45,11 @@ public:
   }
 
   operator bool() const {
-    return m_json && m_nmb_tok > 0;
+    return m_json && m_nmb_tok > 0 && m_tok[0].type == JSMN_OBJECT;
+  }
+
+  int get_jsmn_error() const {
+    return m_nmb_tok < 0 ? m_nmb_tok : 0;
   }
 
   /**
@@ -487,6 +495,16 @@ public:
   }
 
 private:
+  static unsigned get_nmb_of_tokens(const char *json) {
+    if (json) {
+      jsmn_parser parser;
+      jsmn_init(&parser);
+      auto nmb = jsmn_parse(&parser, json, strlen(json), nullptr, 0);
+      if (nmb > 0)
+        return nmb;
+    }
+    return 0;
+  }
   int do_parse(const char *json) {
     if (!json)
       return false;
@@ -494,14 +512,8 @@ private:
     jsmn_parser parser;
 
     jsmn_init(&parser);
-    int r = jsmn_parse(&parser, json, strlen(json), m_tok, m_tok_max);
-    if (r < 0) {
-      return 0;
-    }
-    if (r < 1 || m_tok[0].type != JSMN_OBJECT) {
-      return 0;
-    }
-    return r;
+
+    return jsmn_parse(&parser, json, strlen(json), m_tok, m_tok_max);
   }
   /**
    * \brief            copy string from a token to a buffer
@@ -643,10 +655,10 @@ private:
 
 private:
   input_type m_json; ///<  the JSON data we work on
+  unsigned m_tok_max; ///< how many elements \ref m_tok can hold
   jsmntok_t *m_tok_heap_alloc; ///< token array pointer on heap used for realloc(), free() only. use \ref m_tok for anything else.
   jsmntok_t *m_tok;  ///< token array we work with
-  unsigned m_tok_max; ///< how many elements \ref m_tok can hold
-  unsigned m_nmb_tok; ///< the actual number of tokens Jsmn has parsed from /ref m_json
+  int m_nmb_tok; ///< the actual number of tokens Jsmn has parsed from /ref m_json
 
 };
 
